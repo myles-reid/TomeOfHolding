@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.DAL;
+
 namespace TomeOfHolding {
 	public class Program {
 		public static void Main(string[] args) {
@@ -7,6 +10,9 @@ namespace TomeOfHolding {
 			// Add services to the container.
 
 			builder.Services.AddControllers();
+
+			builder.Services.AddDbContext<TomeOfHoldingContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
