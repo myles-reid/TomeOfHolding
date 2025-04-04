@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace TomeOfHolding.Models {
+﻿namespace TomeOfHolding.Models {
 	public class Session {
 		public int SessionId { get; set; }
 		public DateOnly Date { get; set; }

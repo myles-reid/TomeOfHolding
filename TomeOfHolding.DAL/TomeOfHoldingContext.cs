@@ -2,7 +2,7 @@
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
-	
+
 	public class TomeOfHoldingContext : DbContext {
 		public DbSet<Campaign> Campaigns { get; set; }
 		public DbSet<Session> Sessions { get; set; }

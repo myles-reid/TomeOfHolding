@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TomeOfHolding.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CharacterSheetController : ControllerBase
-    {
-    }
+namespace TomeOfHolding.Controllers {
+	[Route("api/[controller]")]
+	[ApiController]
+	public class CharacterSheetController : ControllerBase {
+	}
 }
