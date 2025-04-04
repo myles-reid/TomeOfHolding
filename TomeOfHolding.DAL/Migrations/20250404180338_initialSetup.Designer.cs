@@ -12,8 +12,8 @@ using TomeOfHolding.DAL;
 namespace TomeOfHolding.DAL.Migrations
 {
     [DbContext(typeof(TomeOfHoldingContext))]
-    [Migration("20250404172925_initialSEtup")]
-    partial class initialSEtup
+    [Migration("20250404180338_initialSetup")]
+    partial class initialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace TomeOfHolding.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CampaignPlayer", b =>
+                {
+                    b.Property<int>("CampaignId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CampaignId", "PlayerId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("CampaignPlayer", (string)null);
+                });
 
             modelBuilder.Entity("TomeOfHolding.Models.Campaign", b =>
                 {
@@ -80,6 +95,9 @@ namespace TomeOfHolding.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Race")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,6 +109,8 @@ namespace TomeOfHolding.DAL.Migrations
                     b.HasKey("CharacterId");
 
                     b.HasIndex("CampaignId");
+
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Characters");
                 });
@@ -211,9 +231,6 @@ namespace TomeOfHolding.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CampaignId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -223,8 +240,6 @@ namespace TomeOfHolding.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PlayerId");
-
-                    b.HasIndex("CampaignId");
 
                     b.ToTable("Players");
                 });
@@ -254,6 +269,21 @@ namespace TomeOfHolding.DAL.Migrations
                     b.ToTable("Sessions");
                 });
 
+            modelBuilder.Entity("CampaignPlayer", b =>
+                {
+                    b.HasOne("TomeOfHolding.Models.Campaign", null)
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TomeOfHolding.Models.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TomeOfHolding.Models.Campaign", b =>
                 {
                     b.HasOne("TomeOfHolding.Models.Player", "GM")
@@ -273,13 +303,15 @@ namespace TomeOfHolding.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TomeOfHolding.Models.Player", null)
+                    b.HasOne("TomeOfHolding.Models.Player", "Player")
                         .WithMany("Characters")
-                        .HasForeignKey("CampaignId")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Campaign");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TomeOfHolding.Models.CharacterSheet", b =>
@@ -323,17 +355,6 @@ namespace TomeOfHolding.DAL.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("TomeOfHolding.Models.Player", b =>
-                {
-                    b.HasOne("TomeOfHolding.Models.Campaign", "Campaign")
-                        .WithMany("Players")
-                        .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Campaign");
-                });
-
             modelBuilder.Entity("TomeOfHolding.Models.Session", b =>
                 {
                     b.HasOne("TomeOfHolding.Models.Campaign", "Campaign")
@@ -348,8 +369,6 @@ namespace TomeOfHolding.DAL.Migrations
             modelBuilder.Entity("TomeOfHolding.Models.Campaign", b =>
                 {
                     b.Navigation("Characters");
-
-                    b.Navigation("Players");
 
                     b.Navigation("Sessions");
                 });

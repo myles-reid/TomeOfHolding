@@ -44,7 +44,7 @@ namespace TomeOfHolding.DAL {
 
 			modelBuilder.Entity<Campaign>()
 				.HasOne(c => c.GM)
-				.WithMany(p => p.Campaigns)
+				.WithMany()
 				.HasForeignKey(c => c.GM_ID)
 				.OnDelete(DeleteBehavior.Restrict);
 
