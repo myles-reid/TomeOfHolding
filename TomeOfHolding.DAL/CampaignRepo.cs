@@ -22,4 +22,13 @@ namespace TomeOfHolding.DAL {
 			await _context.SaveChangesAsync();
 		}
 	}
+
+		public async Task DeleteCampain(int id) {
+            Campaign campaign = await _context.Campaigns.FindAsync(id);
+            if (campaign != null) {
+                _context.Campaigns.Remove(campaign);
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
 }

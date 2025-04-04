@@ -37,5 +37,15 @@ namespace TomeOfHolding.Controllers {
 			await _noteService.CreateNote(note);
 			return CreatedAtAction(nameof(GetNotes), new { id = note.NoteId }, note);
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteNote(int id) {
+			Note? note = await _noteService.GetNoteById(id);
+			if (note == null) {
+				return NotFound("Note not found.");
+			}
+			await _noteService.DeleteNote(id);
+			return Ok("Note deleted successfully.");
+		}
 	}
 }
