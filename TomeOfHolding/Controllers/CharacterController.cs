@@ -39,7 +39,6 @@ namespace TomeOfHolding.Controllers {
 			await _characterService.CreateCharacter(character);
 			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
 		}
-	}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id) {

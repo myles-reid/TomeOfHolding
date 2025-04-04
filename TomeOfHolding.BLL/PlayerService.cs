@@ -17,7 +17,6 @@ namespace TomeOfHolding.BLL {
 			//add validation here, currently unsure how
 			await _playerRepo.CreatePlayer(player);
 		}
-	}
 
         public async Task<Player> GetPlayerById(int id) {
             return await _playerRepo.GetPlayerById(id);

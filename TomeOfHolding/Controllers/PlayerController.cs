@@ -26,7 +26,6 @@ namespace TomeOfHolding.Controllers {
 			await _playerService.CreatePlayer(player);
 			return CreatedAtAction(nameof(GetPlayers), new { id = player.PlayerId }, player);
 		}
-	}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayer(int id) {
