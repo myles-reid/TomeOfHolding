@@ -18,12 +18,13 @@ namespace TomeOfHolding.BLL {
 			await _playerRepo.CreatePlayer(player);
 		}
 
-        public async Task<Player> GetPlayerById(int id) {
-            return await _playerRepo.GetPlayerById(id);
-        }
 
-        public async Task DeletePlayer(int playerId) {
-            await _playerRepo.DeletePlayer(playerId);
-        }
-    }
+		public async Task<Player> GetPlayerById(int id) {
+			return await _playerRepo.GetPlayerById(id);
+		}
+
+		public async Task DeletePlayer(int playerId) {
+			await _playerRepo.DeletePlayer(playerId);
+		}
+	}
 }

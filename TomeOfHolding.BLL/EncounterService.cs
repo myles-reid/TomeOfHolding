@@ -14,10 +14,10 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task<Encounter> GetEncounterById(int id) {
-            return await _encounterRepo.GetEncounterById(id);
-        }
+			return await _encounterRepo.GetEncounterById(id);
+		}
 
-        public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
 			return await _encounterRepo.GetEncountersBySession(sessionId);
 		}
 
@@ -26,8 +26,9 @@ namespace TomeOfHolding.BLL {
 			await _encounterRepo.CreateEncounter(encounter);
 		}
 
+
 		public async Task DeleteEncounter(int id) {
-            await _encounterRepo.DeleteEncounter(id);
-        }
-    }
+			await _encounterRepo.DeleteEncounter(id);
+		}
+	}
 }

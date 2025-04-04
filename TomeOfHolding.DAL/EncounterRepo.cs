@@ -25,6 +25,7 @@ namespace TomeOfHolding.DAL {
 			_context.Encounters.Add(encounter);
 			await _context.SaveChangesAsync();
 		}
+	
 
 		public async Task DeleteEncounter(int id) {
             Encounter encounter = await _context.Encounters.FindAsync(id);

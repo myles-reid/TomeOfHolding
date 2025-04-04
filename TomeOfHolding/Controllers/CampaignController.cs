@@ -38,14 +38,15 @@ namespace TomeOfHolding.Controllers {
 			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
 		}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCampaign(int id) {
-            Campaign? campaign = await _campaignService.GetCampaignById(id);
-            if (campaign == null) {
-                return NotFound("No campaign with that ID found.");
-            }
-            await _campaignService.DeleteCampaign(id);
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteCampaign(int id) {
+			Campaign? campaign = await _campaignService.GetCampaignById(id);
+			if (campaign == null) {
+				return NotFound("No campaign with that ID found.");
+			}
+			await _campaignService.DeleteCampaign(id);
 			return Ok("Campaign deleted successfully.");
-        }
-    }
+		}
+	}
 }
