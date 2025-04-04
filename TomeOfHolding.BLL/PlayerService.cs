@@ -9,8 +9,8 @@ namespace TomeOfHolding.BLL {
 			_playerRepo = playerRepo;
 		}
 
-		public List<Player> GetPlayers() {
-			return _playerRepo.GetPlayers();
+		public async Task<List<Player>> GetPlayers() {
+			return await _playerRepo.GetPlayers();
 		}
 	}
 }

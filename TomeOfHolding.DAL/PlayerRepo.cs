@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
 	public class PlayerRepo {
@@ -8,8 +9,8 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<Player> GetPlayers() {
-			return _context.Players.ToList();
+		public async Task<List<Player>> GetPlayers() {
+			return await _context.Players.ToListAsync();
 		}
 	}
 }
