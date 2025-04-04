@@ -15,7 +15,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet]
 		public async Task<IActionResult> GetEncounters() {
 			// Will need to figure out how to process the NotFound response proplery
-			List<Encounter> encounters = await _encounterService.GetEncounters();
+			List<Encounter>? encounters = await _encounterService.GetEncounters();
 			if (encounters == null || encounters.Count == 0) {
 				return NotFound("No encounters found.");
 			}
@@ -25,7 +25,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetEncountersBySession(int id) {
 			// Will need to figure out how to process the NotFound response proplery
-			List<Encounter> encounters = await _encounterService.GetEncountersBySession(id);
+			List<Encounter>? encounters = await _encounterService.GetEncountersBySession(id);
 			if (encounters == null || encounters.Count == 0) {
 				return NotFound("No encounters found for this session.");
 			}

@@ -15,7 +15,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet]
 		public async Task<IActionResult> GetSessions() {
 			// Will need to figure out how to process the NotFound response proplery
-			List<Session> sessions = await _sessionService.GetSessions();
+			List<Session>? sessions = await _sessionService.GetSessions();
 			if (sessions == null || sessions.Count == 0) {
 				return NotFound("No sessions found.");
 			}

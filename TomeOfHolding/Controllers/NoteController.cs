@@ -15,7 +15,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet]
 		public async Task<IActionResult> GetNotes() {
 			// Will need to figure out how to process the NotFound response proplery
-			List<Note> notes = await _noteService.GetNotes();
+			List<Note>? notes = await _noteService.GetNotes();
 			if (notes == null || notes.Count == 0) {
 				return NotFound("No notes found.");
 			}
@@ -25,7 +25,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetNotesByPlayer(int id) {
 			// Will need to figure out how to process the NotFound response proplery
-			List<Note> notes = await _noteService.GetNotesByPlayer(id);
+			List<Note>? notes = await _noteService.GetNotesByPlayer(id);
 			if (notes == null || notes.Count == 0) {
 				return NotFound("No notes found for this player.");
 			}

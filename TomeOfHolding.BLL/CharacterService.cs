@@ -9,8 +9,14 @@ namespace TomeOfHolding.BLL {
 			_characterRepo = characterRepo;
 		}
 
-		public List<Character> GetCharacters() {
-			return _characterRepo.GetCharacters();
+		public async Task<List<Character>> GetCharacters() {
+			return await _characterRepo.GetCharacters();
 		}
+
+		public async Task<Character> GetCharacterById(int id) {
+			return await _characterRepo.GetCharacterById(id);
+		}
+
+		// Add list of characters by player
 	}
 }
