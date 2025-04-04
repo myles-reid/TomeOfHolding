@@ -1,4 +1,5 @@
 ﻿using TomeOfHolding.DAL;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
 	public class CharacterService {
@@ -6,6 +7,10 @@ namespace TomeOfHolding.BLL {
 
 		public CharacterService(CharacterRepo characterRepo) {
 			_characterRepo = characterRepo;
+		}
+
+		public List<Character> GetCharacters() {
+			return _characterRepo.GetCharacters();
 		}
 	}
 }
