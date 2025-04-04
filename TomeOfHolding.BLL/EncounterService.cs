@@ -12,5 +12,9 @@ namespace TomeOfHolding.BLL {
 		public List<Encounter> GetEncounters() {
 			return _encounterRepo.GetEncounters();
 		}
+
+		public List<Encounter> GetEncountersBySession(int sessionId) {
+			return _encounterRepo.GetEncountersBySession(sessionId);
+		}
 	}
 }
