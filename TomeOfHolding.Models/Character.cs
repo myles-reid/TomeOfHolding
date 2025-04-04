@@ -11,5 +11,5 @@
 		public Campaign Campaign { get; set; }
 		public int CharacterSheetId { get; set; }
 		public CharacterSheet CharacterSheet { get; set; }
-	}
+    }
 }
