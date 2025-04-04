@@ -21,8 +21,7 @@ namespace TomeOfHolding.BLL {
 			//add validation here, currently unsure how
 			await _campaignRepo.CreateCampaign(campaign);
 		}
-	}
-
+	
         public async Task DeleteCampaign(int id) {
             await _campaignRepo.DeleteCampain(id);
         }

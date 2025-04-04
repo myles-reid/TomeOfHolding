@@ -21,7 +21,7 @@ namespace TomeOfHolding.DAL {
 			_context.Campaigns.Add(campaign);
 			await _context.SaveChangesAsync();
 		}
-	}
+	
 
 		public async Task DeleteCampain(int id) {
             Campaign campaign = await _context.Campaigns.FindAsync(id);

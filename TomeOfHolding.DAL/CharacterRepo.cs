@@ -25,7 +25,7 @@ namespace TomeOfHolding.DAL {
 			_context.Characters.Add(character);
 			await _context.SaveChangesAsync();
 		}
-	}
+	
 
 		public async Task DeleteCharacter(int id) {
             Character character = await _context.Characters.FindAsync(id);

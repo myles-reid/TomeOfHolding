@@ -39,16 +39,16 @@ namespace TomeOfHolding.Controllers {
 			await _characterService.CreateCharacter(character);
 			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
 		}
-	}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCharacter(int id) {
-            Character? character = await _characterService.GetCharacterById(id);
-            if (character == null) {
-                return NotFound("No character found.");
-            }
-            await _characterService.DeleteCharacter(id);
-            return Ok("Character deleted successfully.");
-        }
-    }
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteCharacter(int id) {
+			Character? character = await _characterService.GetCharacterById(id);
+			if (character == null) {
+				return NotFound("No character found.");
+			}
+			await _characterService.DeleteCharacter(id);
+			return Ok("Character deleted successfully.");
+		}
+	}
 }

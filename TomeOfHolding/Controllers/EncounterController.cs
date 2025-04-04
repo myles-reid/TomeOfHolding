@@ -37,16 +37,16 @@ namespace TomeOfHolding.Controllers {
 			await _encounterService.CreateEncounter(encounter);
 			return CreatedAtAction(nameof(GetEncounters), new { id = encounter.EncounterId }, encounter);
 		}
-	}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEncounter(int id) {
-            Encounter encounter = await _encounterService.GetEncounterById(id);
-            if (encounter == null) {
-                return NotFound("Encounter not found.");
-            }
-            await _encounterService.DeleteEncounter(id);
-            return Ok("Encounter deleted successfully.");
-        }
-    }
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteEncounter(int id) {
+			Encounter encounter = await _encounterService.GetEncounterById(id);
+			if (encounter == null) {
+				return NotFound("Encounter not found.");
+			}
+			await _encounterService.DeleteEncounter(id);
+			return Ok("Encounter deleted successfully.");
+		}
+	}
 }
