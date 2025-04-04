@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TomeOfHolding.BLL;
 
-namespace TomeOfHolding.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class NoteController : ControllerBase
-    {
-    }
+namespace TomeOfHolding.Controllers {
+	[Route("api/[controller]")]
+	[ApiController]
+	public class NoteController : ControllerBase {
+		private readonly NoteService _noteService;
+
+		public NoteController(NoteService noteService) {
+			_noteService = noteService;
+		}
+	}
 }
