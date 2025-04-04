@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Temp Appsetting.Json file, only for development purposes. comment out when finished
 appsettings.json
+
+TomeOfHolding.DAL/Migrations
