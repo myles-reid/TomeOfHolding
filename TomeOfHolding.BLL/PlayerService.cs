@@ -12,5 +12,10 @@ namespace TomeOfHolding.BLL {
 		public async Task<List<Player>> GetPlayers() {
 			return await _playerRepo.GetPlayers();
 		}
+
+		public async Task CreatePlayer(Player player) {
+			//add validation here, currently unsure how
+			await _playerRepo.CreatePlayer(player);
+		}
 	}
 }

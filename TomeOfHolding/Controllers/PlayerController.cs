@@ -20,5 +20,11 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(players);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreatePlayer(Player player) {
+			await _playerService.CreatePlayer(player);
+			return CreatedAtAction(nameof(GetPlayers), new { id = player.PlayerId }, player);
+		}
 	}
 }
