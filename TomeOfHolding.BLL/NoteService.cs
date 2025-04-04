@@ -9,12 +9,12 @@ namespace TomeOfHolding.BLL {
 			_noteRepo = noteRepo;
 		}
 
-		public List<Note> GetNotes() {
-			return _noteRepo.GetNotes();
+		public async Task<List<Note>> GetNotes() {
+			return await _noteRepo.GetNotes();
 		}
 
-		public List<Note> GetNotesByPlayer(int playerId) {
-			return _noteRepo.GetNotesByPlayer(playerId);
+		public async Task<List<Note>> GetNotesByPlayer(int playerId) {
+			return await _noteRepo.GetNotesByPlayer(playerId);
 		}
 	}
 }

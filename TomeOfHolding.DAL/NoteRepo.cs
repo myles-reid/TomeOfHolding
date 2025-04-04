@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
 	public class NoteRepo {
@@ -8,12 +9,12 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<Note> GetNotes() {
-			return _context.Notes.ToList();
+		public async Task<List<Note>> GetNotes() {
+			return await _context.Notes.ToListAsync();
 		}
 
-		public List<Note> GetNotesByPlayer(int playerId) {
-			return _context.Notes.Where(n => n.PlayerId == playerId).ToList();
+		public async Task<List<Note>> GetNotesByPlayer(int playerId) {
+			return await _context.Notes.Where(n => n.PlayerId == playerId).ToListAsync();
 		}
 	}
 }
