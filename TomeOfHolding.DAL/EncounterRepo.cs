@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
 	public class EncounterRepo {
@@ -8,12 +9,12 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<Encounter> GetEncounters() {
-			return _context.Encounters.ToList();
+		public async Task<List<Encounter>> GetEncounters() {
+			return await _context.Encounters.ToListAsync();
 		}
 
-		public List<Encounter> GetEncountersBySession(int sessionId) {
-			return _context.Encounters.Where(e => e.SessionId == sessionId).ToList();
+		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+			return await _context.Encounters.Where(e => e.SessionId == sessionId).ToListAsync();
 		}
 	}
 }

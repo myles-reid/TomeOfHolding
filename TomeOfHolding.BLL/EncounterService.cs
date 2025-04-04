@@ -9,12 +9,12 @@ namespace TomeOfHolding.BLL {
 			_encounterRepo = encounterRepo;
 		}
 
-		public List<Encounter> GetEncounters() {
-			return _encounterRepo.GetEncounters();
+		public async Task<List<Encounter>> GetEncounters() {
+			return await _encounterRepo.GetEncounters();
 		}
 
-		public List<Encounter> GetEncountersBySession(int sessionId) {
-			return _encounterRepo.GetEncountersBySession(sessionId);
+		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+			return await _encounterRepo.GetEncountersBySession(sessionId);
 		}
 	}
 }
