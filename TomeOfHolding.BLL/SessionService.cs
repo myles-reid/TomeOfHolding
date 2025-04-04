@@ -12,5 +12,13 @@ namespace TomeOfHolding.BLL {
 		public async Task<List<Session>> GetSessions() {
 			return await _sessionRepo.GetSessions();
 		}
-	}
+
+        public async Task<Session> GetSessionById(int id) {
+            return await _sessionRepo.GetSessionById(id);
+        }
+
+        public async Task DeleteSession(int sessionId) {
+            await _sessionRepo.DeleteSession(sessionId);
+        }
+    }
 }
