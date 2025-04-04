@@ -8,8 +8,8 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<CharacterSheet> GetCharacterSheets() {
-			return _context.CharacterSheets.ToList();
+		public async Task<CharacterSheet> GetCharacterSheet(int characterId) {
+			return await _context.CharacterSheets.FindAsync(characterId);
 		}
 	}
 }

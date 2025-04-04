@@ -9,8 +9,8 @@ namespace TomeOfHolding.BLL {
 			_characterSheetRepo = characterSheetRepo;
 		}
 
-		public List<CharacterSheet> GetCharacterSheets() {
-			return _characterSheetRepo.GetCharacterSheets();
+		public async Task<CharacterSheet> GetCharacterSheet(int characterId) {
+			return await _characterSheetRepo.GetCharacterSheet(characterId);
 		}
 	}
 }
