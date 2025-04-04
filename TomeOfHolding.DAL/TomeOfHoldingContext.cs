@@ -68,7 +68,7 @@ namespace TomeOfHolding.Data
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Campaign)
-                .WithMany()
+                .WithMany(cp => cp.Characters)
                 .HasForeignKey(c => c.CampaignId)
                 .OnDelete(DeleteBehavior.Cascade);
 
