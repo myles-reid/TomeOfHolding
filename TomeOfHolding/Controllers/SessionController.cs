@@ -21,5 +21,11 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(sessions);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateSession(Session session) {
+			await _sessionService.CreateSession(session);
+			return CreatedAtAction(nameof(GetSessions), new { id = session.SessionId }, session);
+		}
 	}
 }

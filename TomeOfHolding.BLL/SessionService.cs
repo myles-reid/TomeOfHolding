@@ -12,5 +12,10 @@ namespace TomeOfHolding.BLL {
 		public async Task<List<Session>> GetSessions() {
 			return await _sessionRepo.GetSessions();
 		}
+
+		public async Task CreateSession(Session session) {
+			//add validation here, currently unsure how
+			await _sessionRepo.CreateSession(session);
+		}
 	}
 }
