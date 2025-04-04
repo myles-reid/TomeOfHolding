@@ -22,5 +22,15 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(characterSheet);
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteCharacterSheet(int id) {
+			CharacterSheet? characterSheet = await _characterSheetService.GetCharacterSheet(id);
+			if (characterSheet == null) {
+				return NotFound("No character sheet found.");
+			}
+			await _characterSheetService.DeleteCharacterSheet(id);
+			return Ok("CharacterSheet deleted successfully.");
+		}
 	}
 }

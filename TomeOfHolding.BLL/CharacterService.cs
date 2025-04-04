@@ -18,5 +18,9 @@ namespace TomeOfHolding.BLL {
 		}
 
 		// Add list of characters by player
-	}
+
+		public async Task DeleteCharacter(int id) {
+            await _characterRepo.DeleteCharacter(id);
+        }
+    }
 }
