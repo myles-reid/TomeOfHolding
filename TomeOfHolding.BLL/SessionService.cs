@@ -9,8 +9,8 @@ namespace TomeOfHolding.BLL {
 			_sessionRepo = sessionRepo;
 		}
 
-		public List<Session> GetSessions() {
-			return _sessionRepo.GetSessions();
+		public async Task<List<Session>> GetSessions() {
+			return await _sessionRepo.GetSessions();
 		}
 	}
 }

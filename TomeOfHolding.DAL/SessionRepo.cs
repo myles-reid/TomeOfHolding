@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
 	public class SessionRepo {
@@ -8,8 +9,8 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<Session> GetSessions() {
-			return _context.Sessions.ToList();
+		public async Task<List<Session>> GetSessions() {
+			return await _context.Sessions.ToListAsync();
 		}
 	}
 }
