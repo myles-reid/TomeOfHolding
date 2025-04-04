@@ -31,5 +31,11 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(campaign);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateCampaign(Campaign campaign) {
+			await _campaignService.CreateCampaign(campaign);
+			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
+		}
 	}
 }
