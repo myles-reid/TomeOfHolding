@@ -20,5 +20,10 @@ namespace TomeOfHolding.DAL {
 		//public List<Character> GetCharactersByPlayer(int playerId) {
 		//	return _context.Characters.Where(c => c.PlayerId == playerId).ToList();
 		//}
+
+		public async Task CreateCharacter(Character character) {
+			_context.Characters.Add(character);
+			await _context.SaveChangesAsync();
+		}
 	}
 }

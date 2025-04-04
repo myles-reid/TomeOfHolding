@@ -33,5 +33,11 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		//Will need to add get by player
+
+		[HttpPost]
+		public async Task<IActionResult> CreateCharacter(Character character) {
+			await _characterService.CreateCharacter(character);
+			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+		}
 	}
 }
