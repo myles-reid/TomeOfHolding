@@ -31,5 +31,11 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(encounters);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateEncounter(Encounter encounter) {
+			await _encounterService.CreateEncounter(encounter);
+			return CreatedAtAction(nameof(GetEncounters), new { id = encounter.EncounterId }, encounter);
+		}
 	}
 }

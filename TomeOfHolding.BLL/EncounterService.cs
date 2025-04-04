@@ -16,5 +16,10 @@ namespace TomeOfHolding.BLL {
 		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
 			return await _encounterRepo.GetEncountersBySession(sessionId);
 		}
+
+		public async Task CreateEncounter(Encounter encounter) {
+			// Add validation here, currently unsure how
+			await _encounterRepo.CreateEncounter(encounter);
+		}
 	}
 }
