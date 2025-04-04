@@ -18,12 +18,16 @@ namespace TomeOfHolding.DAL {
 		}
 
 		public async Task DeleteCharacterSheet(int characterId) {
-            CharacterSheet characterSheet = await _context.CharacterSheets.FindAsync(characterId);
-            if (characterSheet != null)
-            {
-                _context.CharacterSheets.Remove(characterSheet);
-                await _context.SaveChangesAsync();
-            }
+			CharacterSheet characterSheet = await _context.CharacterSheets.FindAsync(characterId);
+			if (characterSheet != null) {
+				_context.CharacterSheets.Remove(characterSheet);
+				await _context.SaveChangesAsync();
+			}
+		}
+
+		public async Task UpdateCharacterSheet(CharacterSheet characterSheet) {
+			_context.CharacterSheets.Update(characterSheet);
+            await _context.SaveChangesAsync();
         }
 	}
 }

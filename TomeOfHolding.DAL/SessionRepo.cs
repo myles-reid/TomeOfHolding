@@ -29,5 +29,10 @@ namespace TomeOfHolding.DAL {
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateSession(Session session) {
+            _context.Sessions.Update(session);
+            await _context.SaveChangesAsync();
+        }
     }
 }

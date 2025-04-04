@@ -24,7 +24,11 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task DeleteCharacter(int id) {
-            await _characterRepo.DeleteCharacter(id);
-        }
-    }
+			await _characterRepo.DeleteCharacter(id);
+		}
+
+		public async Task UpdateCharacter(Character character) {
+			await _characterRepo.UpdateCharacter(character);
+		}
+	}
 }

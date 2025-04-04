@@ -29,5 +29,10 @@ namespace TomeOfHolding.DAL {
                 await _context.SaveChangesAsync();
             }
         }
+
+		public async Task UpdateCampain(Campaign campaign) {
+			_context.Campaigns.Update(campaign);
+            await _context.SaveChangesAsync();
+        }
     }
 }

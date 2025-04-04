@@ -27,14 +27,27 @@ namespace TomeOfHolding.Controllers {
 			return CreatedAtAction(nameof(GetPlayers), new { id = player.PlayerId }, player);
 		}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayer(int id) {
-            Player? player = await _playerService.GetPlayerById(id);
-            if (player == null) {
-                return NotFound($"Player with ID {id} not found.");
-            }
-            await _playerService.DeletePlayer(id);
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeletePlayer(int id) {
+			Player? player = await _playerService.GetPlayerById(id);
+			if (player == null) {
+				return NotFound($"Player with ID {id} not found.");
+			}
+			await _playerService.DeletePlayer(id);
 			return Ok("Player deleted successfully.");
+		}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdatePlayer(int id, Player player) {
+			if (id != player.PlayerId) {
+				return BadRequest("Player ID mismatch.");
+			}
+			Player? existingPlayer = await _playerService.GetPlayerById(id);
+			if (existingPlayer == null) {
+				return NotFound($"Player with ID {id} not found.");
+			}
+			await _playerService.UpdatePlayer(player);
+            return Ok("Player updated");
         }
-    }
+	}
 }

@@ -28,5 +28,9 @@ namespace TomeOfHolding.BLL {
 		public async Task DeleteNote(int noteId) {
             await _noteRepo.DeleteNote(noteId);
         }
+
+        public async Task UpdateNote(Note note) {
+            await _noteRepo.UpdateNote(note);
+        }
     }
 }

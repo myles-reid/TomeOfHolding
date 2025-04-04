@@ -37,5 +37,18 @@ namespace TomeOfHolding.Controllers {
             await _sessionService.DeleteSession(id);
             return Ok("Session deleted successfully.");
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSession(int id, Session session) {
+            if (id != session.SessionId) {
+                return BadRequest("Session ID mismatch.");
+            }
+            Session? existingSession = await _sessionService.GetSessionById(id);
+            if (existingSession == null) {
+                return NotFound($"Session with ID {id} not found.");
+            }
+            await _sessionService.UpdateSession(session);
+            return Ok("Session updated");
+        }
     }
 }

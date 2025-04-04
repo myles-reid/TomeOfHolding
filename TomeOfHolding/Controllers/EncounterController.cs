@@ -47,5 +47,19 @@ namespace TomeOfHolding.Controllers {
             await _encounterService.DeleteEncounter(id);
             return Ok("Encounter deleted successfully.");
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEncounter(int id, Encounter encounter) {
+            if (id != encounter.EncounterId) {
+                return BadRequest("Encounter ID mismatch.");
+            }
+            Encounter existingEncounter = await _encounterService.GetEncounterById(id);
+            if (existingEncounter == null) {
+                return NotFound("Encounter not found.");
+            }
+            await _encounterService.UpdateEncounter(encounter);
+			return Ok("Encounter Updated");
+
+        }
     }
 }
