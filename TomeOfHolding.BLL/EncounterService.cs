@@ -25,7 +25,6 @@ namespace TomeOfHolding.BLL {
 			// Add validation here, currently unsure how
 			await _encounterRepo.CreateEncounter(encounter);
 		}
-	}
 
 		public async Task DeleteEncounter(int id) {
             await _encounterRepo.DeleteEncounter(id);

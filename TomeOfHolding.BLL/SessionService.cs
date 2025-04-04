@@ -20,8 +20,6 @@ namespace TomeOfHolding.BLL {
 			//add validation here, currently unsure how
 			await _sessionRepo.CreateSession(session);
 		}
-	}
-
 
         public async Task DeleteSession(int sessionId) {
             await _sessionRepo.DeleteSession(sessionId);

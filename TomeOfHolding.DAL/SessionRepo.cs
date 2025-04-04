@@ -17,7 +17,6 @@ namespace TomeOfHolding.DAL {
 			_context.Sessions.Add(session);
 			await _context.SaveChangesAsync();
 		}
-	}
 
         public async Task<Session> GetSessionById(int id) {
             return await _context.Sessions.FindAsync(id);

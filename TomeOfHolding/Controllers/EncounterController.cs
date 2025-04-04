@@ -37,7 +37,6 @@ namespace TomeOfHolding.Controllers {
 			await _encounterService.CreateEncounter(encounter);
 			return CreatedAtAction(nameof(GetEncounters), new { id = encounter.EncounterId }, encounter);
 		}
-	}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEncounter(int id) {

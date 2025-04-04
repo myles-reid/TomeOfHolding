@@ -37,7 +37,6 @@ namespace TomeOfHolding.Controllers {
 			await _campaignService.CreateCampaign(campaign);
 			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
 		}
-	}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCampaign(int id) {
