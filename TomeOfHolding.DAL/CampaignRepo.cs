@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.DAL {
 	public class CampaignRepo {
@@ -8,8 +9,12 @@ namespace TomeOfHolding.DAL {
 			_context = context;
 		}
 
-		public List<Campaign> GetCampaigns() {
-			return _context.Campaigns.ToList();
+		public async Task<List<Campaign>> GetCampaigns() {
+			return await _context.Campaigns.ToListAsync();
+		}
+
+		public async Task<Campaign> GetCampaignById(int id) {
+			return await _context.Campaigns.FindAsync(id);
 		}
 	}
 }

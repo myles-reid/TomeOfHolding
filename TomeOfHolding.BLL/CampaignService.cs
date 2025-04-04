@@ -9,8 +9,12 @@ namespace TomeOfHolding.BLL {
 			_campaignRepo = campaignRepo;
 		}
 
-		public List<Campaign> GetCampaigns() {
-			return _campaignRepo.GetCampaigns();
+		public async Task<List<Campaign>> GetCampaigns() {
+			return await _campaignRepo.GetCampaigns();
+		}
+
+		public async Task<Campaign> GetCampaignById(int id) {
+			return await _campaignRepo.GetCampaignById(id);
 		}
 	}
 }
