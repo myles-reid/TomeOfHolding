@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
@@ -10,5 +11,27 @@ namespace TomeOfHolding.Controllers {
 		public CharacterController(CharacterService characterService) {
 			_characterService = characterService;
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetCharacters() {
+			// Will need to figure out how to process the NotFound response properly
+			List<Character>? characters = await _characterService.GetCharacters();
+			if (characters == null || characters.Count == 0) {
+				return NotFound("No characters found.");
+			}
+			return Ok(characters);
+		}
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetCharacter(int id) {
+			// Will need to figure out how to process the NotFound response properly
+			Character? character = await _characterService.GetCharacterById(id);
+			if (character == null) {
+				return NotFound("No character found.");
+			}
+			return Ok(character);
+		}
+
+		//Will need to add get by player
 	}
 }

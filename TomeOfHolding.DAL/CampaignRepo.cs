@@ -1,9 +1,20 @@
-﻿namespace TomeOfHolding.DAL {
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
+
+namespace TomeOfHolding.DAL {
 	public class CampaignRepo {
 		private readonly TomeOfHoldingContext _context;
 
 		public CampaignRepo(TomeOfHoldingContext context) {
 			_context = context;
+		}
+
+		public async Task<List<Campaign>> GetCampaigns() {
+			return await _context.Campaigns.ToListAsync();
+		}
+
+		public async Task<Campaign> GetCampaignById(int id) {
+			return await _context.Campaigns.FindAsync(id);
 		}
 	}
 }

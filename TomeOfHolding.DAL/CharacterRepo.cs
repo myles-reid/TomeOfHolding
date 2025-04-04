@@ -1,9 +1,24 @@
-﻿namespace TomeOfHolding.DAL {
+﻿using Microsoft.EntityFrameworkCore;
+using TomeOfHolding.Models;
+
+namespace TomeOfHolding.DAL {
 	public class CharacterRepo {
 		private readonly TomeOfHoldingContext _context;
 
 		public CharacterRepo(TomeOfHoldingContext context) {
 			_context = context;
 		}
+
+		public async Task<List<Character>> GetCharacters() {
+			return await _context.Characters.ToListAsync();
+		}
+
+		public async Task<Character> GetCharacterById(int id) {
+			return await _context.Characters.FindAsync(id);
+		}
+
+		//public List<Character> GetCharactersByPlayer(int playerId) {
+		//	return _context.Characters.Where(c => c.PlayerId == playerId).ToList();
+		//}
 	}
 }

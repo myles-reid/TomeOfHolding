@@ -1,4 +1,5 @@
 ﻿using TomeOfHolding.DAL;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
 	public class SessionService {
@@ -6,6 +7,10 @@ namespace TomeOfHolding.BLL {
 
 		public SessionService(SessionRepo sessionRepo) {
 			_sessionRepo = sessionRepo;
+		}
+
+		public async Task<List<Session>> GetSessions() {
+			return await _sessionRepo.GetSessions();
 		}
 	}
 }

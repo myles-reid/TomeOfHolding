@@ -1,4 +1,5 @@
 ﻿using TomeOfHolding.DAL;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
 	public class CharacterSheetService {
@@ -6,6 +7,10 @@ namespace TomeOfHolding.BLL {
 
 		public CharacterSheetService(CharacterSheetRepo characterSheetRepo) {
 			_characterSheetRepo = characterSheetRepo;
+		}
+
+		public async Task<CharacterSheet> GetCharacterSheet(int characterId) {
+			return await _characterSheetRepo.GetCharacterSheet(characterId);
 		}
 	}
 }
