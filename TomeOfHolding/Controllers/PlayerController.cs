@@ -12,6 +12,7 @@ namespace TomeOfHolding.Controllers {
 			_playerService = playerService;
 		}
 
+		[HttpGet]
 		public async Task<IActionResult> GetPlayers() {
 			// Will need to figure out how to process the NotFound response proplery
 			List<Player>? players = await _playerService.GetPlayers();

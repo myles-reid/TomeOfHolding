@@ -7,9 +7,11 @@
 		public int Level { get; set; }
 		public string Race { get; set; }
 		public string Description { get; set; }
+		public int PlayerId { get; set; }
+		public Player Player { get; set; }
 		public int CampaignId { get; set; }
 		public Campaign Campaign { get; set; }
 		public int CharacterSheetId { get; set; }
 		public CharacterSheet CharacterSheet { get; set; }
-    }
+	}
 }

@@ -13,9 +13,9 @@ namespace TomeOfHolding.BLL {
 			return await _sessionRepo.GetSessions();
 		}
 
-        public async Task<Session> GetSessionById(int id) {
-            return await _sessionRepo.GetSessionById(id);
-        }
+		public async Task<Session> GetSessionById(int id) {
+			return await _sessionRepo.GetSessionById(id);
+		}
 		public async Task CreateSession(Session session) {
 			//add validation here, currently unsure how
 			await _sessionRepo.CreateSession(session);
