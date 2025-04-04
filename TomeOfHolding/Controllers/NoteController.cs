@@ -31,5 +31,11 @@ namespace TomeOfHolding.Controllers {
 			}
 			return Ok(notes);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateNote(Note note) {
+			await _noteService.CreateNote(note);
+			return CreatedAtAction(nameof(GetNotes), new { id = note.NoteId }, note);
+		}
 	}
 }
