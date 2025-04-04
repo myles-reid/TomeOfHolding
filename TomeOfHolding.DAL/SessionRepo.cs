@@ -1,6 +1,9 @@
-﻿using TomeOfHolding.Models;
-using Microsoft.EntityFrameworkCore;
-namespace TomeOfHolding.DAL {
+﻿namespace TomeOfHolding.DAL {
 	public class SessionRepo {
+		private readonly TomeOfHoldingContext _context;
+
+		public SessionRepo(TomeOfHoldingContext context) {
+			_context = context;
+		}
 	}
 }

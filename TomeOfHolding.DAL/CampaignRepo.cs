@@ -1,6 +1,9 @@
-﻿using TomeOfHolding.Models;
-using Microsoft.EntityFrameworkCore;
-namespace TomeOfHolding.DAL {
+﻿namespace TomeOfHolding.DAL {
 	public class CampaignRepo {
+		private readonly TomeOfHoldingContext _context;
+
+		public CampaignRepo(TomeOfHoldingContext context) {
+			_context = context;
+		}
 	}
 }
