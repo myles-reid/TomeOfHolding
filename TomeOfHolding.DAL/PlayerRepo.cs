@@ -13,6 +13,11 @@ namespace TomeOfHolding.DAL {
 			return await _context.Players.ToListAsync();
 		}
 
+		public async Task CreatePlayer(Player player) {
+			_context.Players.Add(player);
+			await _context.SaveChangesAsync();
+		}
+
         public async Task<Player> GetPlayerById(int id) {
             return await _context.Players.FindAsync(id);
         }

@@ -21,6 +21,11 @@ namespace TomeOfHolding.BLL {
 			return await _noteRepo.GetNotesByPlayer(playerId);
 		}
 
+		public async Task CreateNote(Note note) {
+			await _noteRepo.CreateNote(note);
+		}
+	}
+
 		public async Task DeleteNote(int noteId) {
             await _noteRepo.DeleteNote(noteId);
         }

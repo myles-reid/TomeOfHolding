@@ -21,6 +21,11 @@ namespace TomeOfHolding.DAL {
 			return await _context.Notes.Where(n => n.PlayerId == playerId).ToListAsync();
 		}
 
+		public async Task CreateNote(Note note) {
+			_context.Notes.Add(note);
+			await _context.SaveChangesAsync();
+		}
+
 		public async Task DeleteNote(int noteId) {
             Note note = await _context.Notes.FindAsync(noteId);
             if (note != null) {

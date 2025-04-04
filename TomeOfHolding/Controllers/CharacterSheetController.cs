@@ -23,6 +23,12 @@ namespace TomeOfHolding.Controllers {
 			return Ok(characterSheet);
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> CreateCharacterSheet(CharacterSheet sheet) {
+			await _characterSheetService.CreateCharacterSheet(sheet);
+			return CreatedAtAction(nameof(GetCharacterSheet), new { id = sheet.CharacterId }, sheet);
+		}
+
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCharacterSheet(int id) {
 			CharacterSheet? characterSheet = await _characterSheetService.GetCharacterSheet(id);

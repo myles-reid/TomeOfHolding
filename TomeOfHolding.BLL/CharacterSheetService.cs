@@ -13,6 +13,11 @@ namespace TomeOfHolding.BLL {
 			return await _characterSheetRepo.GetCharacterSheet(characterId);
 		}
 
+		public async Task CreateCharacterSheet(CharacterSheet characterSheet) {
+			await _characterSheetRepo.CreateCharacterSheet(characterSheet);
+		}
+	}
+
 		public async Task DeleteCharacterSheet(int characterId) {
             await _characterSheetRepo.DeleteCharacterSheet(characterId);
         }

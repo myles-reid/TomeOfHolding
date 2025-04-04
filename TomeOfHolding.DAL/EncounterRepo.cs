@@ -21,6 +21,12 @@ namespace TomeOfHolding.DAL {
 			return await _context.Encounters.Where(e => e.SessionId == sessionId).ToListAsync();
 		}
 
+		public async Task CreateEncounter(Encounter encounter) {
+			_context.Encounters.Add(encounter);
+			await _context.SaveChangesAsync();
+		}
+	}
+
 		public async Task DeleteEncounter(int id) {
             Encounter encounter = await _context.Encounters.FindAsync(id);
             if (encounter != null) {

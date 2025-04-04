@@ -32,7 +32,14 @@ namespace TomeOfHolding.Controllers {
 			return Ok(character);
 		}
 
-        //Will need to add get by player
+		//Will need to add get by player
+
+		[HttpPost]
+		public async Task<IActionResult> CreateCharacter(Character character) {
+			await _characterService.CreateCharacter(character);
+			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+		}
+	}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id) {
