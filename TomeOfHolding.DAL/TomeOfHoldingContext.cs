@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TomeOfHolding.Models;
 
-namespace TomeOfHolding.Data
-{
-    public class TomeOfHoldingContext : DbContext
-    {
+namespace TomeOfHolding.DAL {
+    public class TomeOfHoldingContext : DbContext {
         public TomeOfHoldingContext(DbContextOptions<TomeOfHoldingContext> options) : base(options) { }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Player> Players { get; set; }
@@ -14,8 +12,7 @@ namespace TomeOfHolding.Data
         public DbSet<Encounter> Encounters { get; set; }
         public DbSet<Note> Notes { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Campaign>().HasKey(c => c.CampaignId);
             modelBuilder.Entity<Player>().HasKey(p => p.PlayerId);
             modelBuilder.Entity<Character>().HasKey(c => c.CharacterId);
