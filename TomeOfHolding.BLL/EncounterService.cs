@@ -28,7 +28,11 @@ namespace TomeOfHolding.BLL {
 
 
 		public async Task DeleteEncounter(int id) {
-			await _encounterRepo.DeleteEncounter(id);
-		}
-	}
+            await _encounterRepo.DeleteEncounter(id);
+        }
+
+        public async Task UpdateEncounter(Encounter encounter) {
+            await _encounterRepo.UpdateEncounter(encounter);
+        }
+    }
 }

@@ -29,5 +29,10 @@ namespace TomeOfHolding.DAL {
                 await _context.SaveChangesAsync();
             }
         }
-	}
+
+		public async Task UpdatePlayer(Player player) {
+            _context.Players.Update(player);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

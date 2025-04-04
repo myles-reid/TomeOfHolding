@@ -25,5 +25,9 @@ namespace TomeOfHolding.BLL {
         public async Task DeleteCampaign(int id) {
             await _campaignRepo.DeleteCampain(id);
         }
+
+        public async Task UpdateCampaign(Campaign campaign) {
+            await _campaignRepo.UpdateCampain(campaign);
+        }
     }
 }

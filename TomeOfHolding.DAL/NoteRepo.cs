@@ -33,5 +33,10 @@ namespace TomeOfHolding.DAL {
                 await _context.SaveChangesAsync();
             }
         }
-	}
+
+        public async Task UpdateNote(Note note) {
+            _context.Notes.Update(note);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

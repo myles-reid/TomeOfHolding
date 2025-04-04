@@ -47,5 +47,18 @@ namespace TomeOfHolding.Controllers {
 			await _noteService.DeleteNote(id);
 			return Ok("Note deleted successfully.");
 		}
-	}
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateNote(int id, Note note) {
+            if (id != note.NoteId) {
+                return BadRequest("Note ID mismatch.");
+            }
+            Note? existingNote = await _noteService.GetNoteById(id);
+            if (existingNote == null) {
+                return NotFound("Note not found.");
+            }
+            await _noteService.UpdateNote(note);
+            return Ok("Note updated");
+        }
+    }
 }

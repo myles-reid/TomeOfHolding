@@ -34,5 +34,10 @@ namespace TomeOfHolding.DAL {
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateEncounter(Encounter encounter) {
+            _context.Encounters.Update(encounter);
+            await _context.SaveChangesAsync();
+        }
     }
 }

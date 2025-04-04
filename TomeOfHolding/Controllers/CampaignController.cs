@@ -47,6 +47,19 @@ namespace TomeOfHolding.Controllers {
 			}
 			await _campaignService.DeleteCampaign(id);
 			return Ok("Campaign deleted successfully.");
-		}
-	}
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCampaign(int id, Campaign campaign) {
+            if (id != campaign.CampaignId) {
+                return BadRequest("Campaign ID mismatch.");
+            }
+            Campaign? existingCampaign = await _campaignService.GetCampaignById(id);
+            if (existingCampaign == null) {
+                return NotFound("No campaign with that ID found.");
+            }
+            await _campaignService.UpdateCampaign(campaign);
+			return Ok("Campaign Updated");
+        }
+    }
 }

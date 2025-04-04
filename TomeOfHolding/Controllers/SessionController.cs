@@ -28,15 +28,27 @@ namespace TomeOfHolding.Controllers {
 			return CreatedAtAction(nameof(GetSessions), new { id = session.SessionId }, session);
 		}
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSession(int id) {
+            Session? session = await _sessionService.GetSessionById(id);
+            if (session == null) {
+                return NotFound($"Session with ID {id} not found.");
+            }
+            await _sessionService.DeleteSession(id);
+            return Ok("Session deleted successfully.");
+        }
 
-		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteSession(int id) {
-			Session? session = await _sessionService.GetSessionById(id);
-			if (session == null) {
-				return NotFound($"Session with ID {id} not found.");
-			}
-			await _sessionService.DeleteSession(id);
-			return Ok("Session deleted successfully.");
-		}
-	}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSession(int id, Session session) {
+            if (id != session.SessionId) {
+                return BadRequest("Session ID mismatch.");
+            }
+            Session? existingSession = await _sessionService.GetSessionById(id);
+            if (existingSession == null) {
+                return NotFound($"Session with ID {id} not found.");
+            }
+            await _sessionService.UpdateSession(session);
+            return Ok("Session updated");
+        }
+    }
 }

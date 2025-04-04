@@ -21,10 +21,12 @@ namespace TomeOfHolding.BLL {
 			await _sessionRepo.CreateSession(session);
 		}
 
+        public async Task DeleteSession(int sessionId) {
+            await _sessionRepo.DeleteSession(sessionId);
+        }
 
-
-		public async Task DeleteSession(int sessionId) {
-			await _sessionRepo.DeleteSession(sessionId);
-		}
-	}
+        public async Task UpdateSession(Session session) {
+            await _sessionRepo.UpdateSession(session);
+        }
+    }
 }

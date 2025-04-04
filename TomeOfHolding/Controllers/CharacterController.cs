@@ -40,7 +40,6 @@ namespace TomeOfHolding.Controllers {
 			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
 		}
 
-
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCharacter(int id) {
 			Character? character = await _characterService.GetCharacterById(id);
@@ -50,5 +49,18 @@ namespace TomeOfHolding.Controllers {
 			await _characterService.DeleteCharacter(id);
 			return Ok("Character deleted successfully.");
 		}
-	}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateCharacter(int id, Character character) {
+			if (id != character.CharacterId) {
+				return BadRequest("Character ID mismatch.");
+			}
+			Character? existingCharacter = await _characterService.GetCharacterById(id);
+			if (existingCharacter == null) {
+				return NotFound("No character found.");
+			}
+			await _characterService.UpdateCharacter(character);
+            return Ok("Character Updated");
+        }
+    }
 }
