@@ -1,5 +1,4 @@
-﻿using TomeOfHolding.BLL.Exceptions;
-using TomeOfHolding.DAL;
+﻿using TomeOfHolding.DAL;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
@@ -11,18 +10,11 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task<List<Campaign>> GetCampaigns() {
-			List<Campaign>? campaigns = await _campaignRepo.GetCampaigns();
-			if (campaigns == null || campaigns.Count == 0) {
-				throw new NotFoundException("No campaigns found.");
-			} else {
-				return campaigns;
-			}
-
+			return await _campaignRepo.GetCampaigns();
 		}
 
 		public async Task<Campaign> GetCampaignById(int id) {
-			Campaign campaign = await _campaignRepo.GetCampaignById(id);
-			return campaign ?? throw new NotFoundException("No campaign with that ID found.");
+			return await _campaignRepo.GetCampaignById(id);
 		}
 
 		public async Task CreateCampaign(Campaign campaign) {
@@ -31,14 +23,10 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task DeleteCampaign(int id) {
-			Campaign? campaign = await _campaignRepo.GetCampaignById(id);
-			if (campaign == null) throw new NotFoundException("No campaign with that ID found."); 
 			await _campaignRepo.DeleteCampain(id);
 		}
 
 		public async Task UpdateCampaign(Campaign campaign) {
-			Campaign? existingCampaign = await _campaignRepo.GetCampaignById(campaign.CampaignId);
-			if (existingCampaign == null) { throw new NotFoundException("No campaign with that ID found."); }
 			await _campaignRepo.UpdateCampain(campaign);
 		}
 	}

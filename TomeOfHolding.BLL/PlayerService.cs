@@ -1,5 +1,4 @@
-﻿using TomeOfHolding.BLL.Exceptions;
-using TomeOfHolding.DAL;
+﻿using TomeOfHolding.DAL;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
@@ -11,12 +10,7 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task<List<Player>> GetPlayers() {
-			List<Player>? players = await _playerRepo.GetPlayers();
-			if (players == null || players.Count == 0) {
-				throw new NotFoundException("No players found.");
-			} else {
-				return players;
-			}
+			return await _playerRepo.GetPlayers();
 		}
 
 		public async Task CreatePlayer(Player player) {
@@ -26,19 +20,14 @@ namespace TomeOfHolding.BLL {
 
 
 		public async Task<Player> GetPlayerById(int id) {
-			Player? player = await _playerRepo.GetPlayerById(id);
-			return player ?? throw new NotFoundException("No player with that ID found.");
+			return await _playerRepo.GetPlayerById(id);
 		}
 
 		public async Task DeletePlayer(int playerId) {
-			Player player = await _playerRepo.GetPlayerById(playerId) ??
-				throw new NotFoundException("No player with that ID found.");
 			await _playerRepo.DeletePlayer(playerId);
 		}
 
 		public async Task UpdatePlayer(Player player) {
-			Player existingPlayer = await _playerRepo.GetPlayerById(player.PlayerId) ??
-				throw new NotFoundException("No player with that ID found.");
 			await _playerRepo.UpdatePlayer(player);
 		}
 	}
