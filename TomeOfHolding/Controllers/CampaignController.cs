@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
+using TomeOfHolding.BLL.Exceptions;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.Controllers {
@@ -14,52 +15,58 @@ namespace TomeOfHolding.Controllers {
 
 		[HttpGet]
 		public async Task<IActionResult> GetCampaigns() {
-			// Will need to figure out how to process the NotFound response properly
-			List<Campaign>? campaigns = await _campaignService.GetCampaigns();
-			if (campaigns == null || campaigns.Count == 0) {
-				return NotFound("No campaigns found.");
+			// This seems to work okay? I havent tried with campaigns available in the database yet
+			try {
+				List<Campaign>? campaigns = await _campaignService.GetCampaigns();
+				return Ok(campaigns);
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			return Ok(campaigns);
 		}
 
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetCampaignById(int id) {
-			// Will need to figure out how to process the NotFound response properly
-			Campaign? campaign = await _campaignService.GetCampaignById(id);
-			if (campaign == null) {
-				return NotFound("No campaign with that ID found.");
+			try {
+				Campaign? campaign = await _campaignService.GetCampaignById(id);
+				return Ok(campaign);
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			return Ok(campaign);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateCampaign(Campaign campaign) {
-			await _campaignService.CreateCampaign(campaign);
-			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
+			if (ModelState.IsValid) {
+				await _campaignService.CreateCampaign(campaign);
+				return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
+			} else {
+				return BadRequest("Invalid campaign data.");
+			}
 		}
 
 
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCampaign(int id) {
-			Campaign? campaign = await _campaignService.GetCampaignById(id);
-			if (campaign == null) {
-				return NotFound("No campaign with that ID found.");
+			try {
+				Campaign? campaign = await _campaignService.GetCampaignById(id);
+				await _campaignService.DeleteCampaign(id);
+				return NoContent();
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			await _campaignService.DeleteCampaign(id);
-			return Ok("Campaign deleted successfully.");
-        }
+		}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCampaign(int id, Campaign campaign) {
-            if (id != campaign.CampaignId) {
-                return BadRequest("Campaign ID mismatch.");
-            }
-            Campaign? existingCampaign = await _campaignService.GetCampaignById(id);
-            if (existingCampaign == null) {
-                return NotFound("No campaign with that ID found.");
-            }
-            await _campaignService.UpdateCampaign(campaign);
-			return Ok("Campaign Updated");
-        }
-    }
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateCampaign(int id, Campaign campaign) {
+			try {
+				if (id != campaign.CampaignId) return BadRequest("Campaign ID mismatch.");
+				await _campaignService.UpdateCampaign(campaign);
+				return Ok("Campaign Updated");
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
+			} catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+		}
+	}
 }

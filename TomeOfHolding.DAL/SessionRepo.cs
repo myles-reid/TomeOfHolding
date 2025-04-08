@@ -17,23 +17,23 @@ namespace TomeOfHolding.DAL {
 			_context.Sessions.Add(session);
 			await _context.SaveChangesAsync();
 		}
-	
 
-        public async Task<Session> GetSessionById(int id) {
-            return await _context.Sessions.FindAsync(id);
-        }
 
-        public async Task DeleteSession(int sessionId) {
-            Session session = await _context.Sessions.FindAsync(sessionId);
-            if (session != null) {
-                _context.Sessions.Remove(session);
-                await _context.SaveChangesAsync();
-            }
-        }
+		public async Task<Session> GetSessionById(int id) {
+			return await _context.Sessions.FindAsync(id);
+		}
 
-        public async Task UpdateSession(Session session) {
-            _context.Sessions.Update(session);
-            await _context.SaveChangesAsync();
-        }
-    }
+		public async Task DeleteSession(int sessionId) {
+			Session session = await _context.Sessions.FindAsync(sessionId);
+			if (session != null) {
+				_context.Sessions.Remove(session);
+				await _context.SaveChangesAsync();
+			}
+		}
+
+		public async Task UpdateSession(Session session) {
+			_context.Sessions.Update(session);
+			await _context.SaveChangesAsync();
+		}
+	}
 }

@@ -48,7 +48,7 @@ namespace TomeOfHolding.Controllers {
 				return NotFound($"Player with ID {id} not found.");
 			}
 			await _playerService.UpdatePlayer(player);
-            return Ok("Player updated");
-        }
+			return Ok("Player updated");
+		}
 	}
 }

@@ -60,7 +60,7 @@ namespace TomeOfHolding.Controllers {
 				return NotFound("No character found.");
 			}
 			await _characterService.UpdateCharacter(character);
-            return Ok("Character Updated");
-        }
-    }
+			return Ok("Character Updated");
+		}
+	}
 }

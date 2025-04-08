@@ -38,28 +38,28 @@ namespace TomeOfHolding.Controllers {
 			return CreatedAtAction(nameof(GetEncounters), new { id = encounter.EncounterId }, encounter);
 		}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEncounter(int id) {
-            Encounter encounter = await _encounterService.GetEncounterById(id);
-            if (encounter == null) {
-                return NotFound("Encounter not found.");
-            }
-            await _encounterService.DeleteEncounter(id);
-            return Ok("Encounter deleted successfully.");
-        }
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteEncounter(int id) {
+			Encounter encounter = await _encounterService.GetEncounterById(id);
+			if (encounter == null) {
+				return NotFound("Encounter not found.");
+			}
+			await _encounterService.DeleteEncounter(id);
+			return Ok("Encounter deleted successfully.");
+		}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEncounter(int id, Encounter encounter) {
-            if (id != encounter.EncounterId) {
-                return BadRequest("Encounter ID mismatch.");
-            }
-            Encounter existingEncounter = await _encounterService.GetEncounterById(id);
-            if (existingEncounter == null) {
-                return NotFound("Encounter not found.");
-            }
-            await _encounterService.UpdateEncounter(encounter);
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateEncounter(int id, Encounter encounter) {
+			if (id != encounter.EncounterId) {
+				return BadRequest("Encounter ID mismatch.");
+			}
+			Encounter existingEncounter = await _encounterService.GetEncounterById(id);
+			if (existingEncounter == null) {
+				return NotFound("Encounter not found.");
+			}
+			await _encounterService.UpdateEncounter(encounter);
 			return Ok("Encounter Updated");
 
-        }
-    }
+		}
+	}
 }

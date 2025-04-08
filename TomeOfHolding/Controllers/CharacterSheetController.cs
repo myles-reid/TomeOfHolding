@@ -48,8 +48,8 @@ namespace TomeOfHolding.Controllers {
 			if (existingCharacterSheet == null) {
 				return NotFound("No character sheet found.");
 			}
-            await _characterSheetService.UpdateCharacterSheet(sheet);
-            return Ok("CharacterSheet updated");
-        }
+			await _characterSheetService.UpdateCharacterSheet(sheet);
+			return Ok("CharacterSheet updated");
+		}
 	}
 }

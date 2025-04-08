@@ -21,19 +21,19 @@ namespace TomeOfHolding.DAL {
 			_context.Campaigns.Add(campaign);
 			await _context.SaveChangesAsync();
 		}
-	
+
 
 		public async Task DeleteCampain(int id) {
-            Campaign campaign = await _context.Campaigns.FindAsync(id);
-            if (campaign != null) {
-                _context.Campaigns.Remove(campaign);
-                await _context.SaveChangesAsync();
-            }
-        }
+			Campaign campaign = await _context.Campaigns.FindAsync(id);
+			if (campaign != null) {
+				_context.Campaigns.Remove(campaign);
+				await _context.SaveChangesAsync();
+			}
+		}
 
 		public async Task UpdateCampain(Campaign campaign) {
 			_context.Campaigns.Update(campaign);
-            await _context.SaveChangesAsync();
-        }
-    }
+			await _context.SaveChangesAsync();
+		}
+	}
 }

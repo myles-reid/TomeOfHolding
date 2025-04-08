@@ -23,7 +23,7 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task UpdateCharacterSheet(CharacterSheet characterSheet) {
-            await _characterSheetRepo.UpdateCharacterSheet(characterSheet);
-        }
+			await _characterSheetRepo.UpdateCharacterSheet(characterSheet);
+		}
 	}
 }
