@@ -48,7 +48,7 @@ namespace TomeOfHolding.Controllers {
 			try {
 				Character? character = await _characterService.GetCharacterById(id);
 				await _characterService.DeleteCharacter(id);
-				return Ok("Character deleted successfully.");
+				return NoContent();
 			} catch (NotFoundException e) {
 				return NotFound(e.Message);
 			}
