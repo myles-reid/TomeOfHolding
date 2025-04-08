@@ -45,7 +45,6 @@ namespace TomeOfHolding.Controllers {
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCampaign(int id) {
 			try {
-				Campaign? campaign = await _campaignService.GetCampaignById(id);
 				await _campaignService.DeleteCampaign(id);
 				return NoContent();
 			} catch (NotFoundException e) {
@@ -61,8 +60,6 @@ namespace TomeOfHolding.Controllers {
 				return Ok("Campaign Updated");
 			} catch (NotFoundException e) {
 				return NotFound(e.Message);
-			} catch (Exception e) {
-				return BadRequest(e.Message);
 			}
 		}
 	}

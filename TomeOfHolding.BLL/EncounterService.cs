@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.DAL;
+﻿using TomeOfHolding.BLL.Exceptions;
+using TomeOfHolding.DAL;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
@@ -10,15 +11,26 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task<List<Encounter>> GetEncounters() {
-			return await _encounterRepo.GetEncounters();
+			List<Encounter>? encounters = await _encounterRepo.GetEncounters();
+			if (encounters == null || encounters.Count == 0) {
+				throw new NotFoundException("No encounters found.");
+			} else {
+				return encounters;
+			}
 		}
 
 		public async Task<Encounter> GetEncounterById(int id) {
-			return await _encounterRepo.GetEncounterById(id);
+			Encounter? encounter = await _encounterRepo.GetEncounterById(id);
+			return encounter ?? throw new NotFoundException("No encounter with that ID found.");
 		}
 
 		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
-			return await _encounterRepo.GetEncountersBySession(sessionId);
+			List<Encounter>? encounters = await _encounterRepo.GetEncountersBySession(sessionId);
+			if (encounters == null || encounters.Count == 0) {
+				throw new NotFoundException("No encounters found for that session.");
+			} else {
+				return encounters;
+			}
 		}
 
 		public async Task CreateEncounter(Encounter encounter) {
@@ -28,10 +40,14 @@ namespace TomeOfHolding.BLL {
 
 
 		public async Task DeleteEncounter(int id) {
+			Encounter? encounter = await _encounterRepo.GetEncounterById(id) ??
+				throw new NotFoundException("No encounter with that ID found.");
 			await _encounterRepo.DeleteEncounter(id);
 		}
 
 		public async Task UpdateEncounter(Encounter encounter) {
+			Encounter? existingEncounter = await _encounterRepo.GetEncounterById(encounter.EncounterId) ??
+				throw new NotFoundException("No encounter with that ID found.");
 			await _encounterRepo.UpdateEncounter(encounter);
 		}
 	}

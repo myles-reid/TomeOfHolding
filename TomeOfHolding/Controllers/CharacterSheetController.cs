@@ -35,7 +35,6 @@ namespace TomeOfHolding.Controllers {
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCharacterSheet(int id) {
 			try {
-				CharacterSheet? characterSheet = await _characterSheetService.GetCharacterSheet(id);
 				await _characterSheetService.DeleteCharacterSheet(id);
 				return NoContent();
 			} catch (NotFoundException e) {
@@ -48,7 +47,6 @@ namespace TomeOfHolding.Controllers {
 		public async Task<IActionResult> UpdateCharacterSheet(int id, CharacterSheet sheet) {
 			try {
 				if (id != sheet.CharacterId) return BadRequest("CharacterID mismatch.");
-				CharacterSheet? existingCharacterSheet = await _characterSheetService.GetCharacterSheet(id);
 				await _characterSheetService.UpdateCharacterSheet(sheet);
 				return Ok("CharacterSheet updated");
 			} catch (NotFoundException e) {
