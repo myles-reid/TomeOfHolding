@@ -26,7 +26,7 @@ namespace TomeOfHolding.Controllers {
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetPlayer(int id) {
 			try {
-				Player? player = await _playerService.GetPlayerById(id);
+				Player player = await _playerService.GetPlayerById(id);
 				return Ok(player);
 			} catch (NotFoundException e) {
 				return NotFound(e.Message);

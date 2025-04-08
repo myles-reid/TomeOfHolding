@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
+using TomeOfHolding.BLL.Exceptions;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.Controllers {
@@ -14,41 +15,40 @@ namespace TomeOfHolding.Controllers {
 
 		[HttpGet]
 		public async Task<IActionResult> GetSessions() {
-			// Will need to figure out how to process the NotFound response proplery
-			List<Session>? sessions = await _sessionService.GetSessions();
-			if (sessions == null || sessions.Count == 0) {
-				return NotFound("No sessions found.");
+			try {
+				List<Session> sessions = await _sessionService.GetSessions();
+				return Ok(sessions);
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			return Ok(sessions);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateSession(Session session) {
+			if (!ModelState.IsValid) return BadRequest("Invalid session data.");
 			await _sessionService.CreateSession(session);
 			return CreatedAtAction(nameof(GetSessions), new { id = session.SessionId }, session);
 		}
 
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteSession(int id) {
-			Session? session = await _sessionService.GetSessionById(id);
-			if (session == null) {
-				return NotFound($"Session with ID {id} not found.");
+			try {
+				await _sessionService.DeleteSession(id);
+				return NoContent();
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			await _sessionService.DeleteSession(id);
-			return Ok("Session deleted successfully.");
 		}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateSession(int id, Session session) {
-			if (id != session.SessionId) {
-				return BadRequest("Session ID mismatch.");
+			try {
+				if (id != session.SessionId) return BadRequest("Session ID mismatch.");
+				await _sessionService.UpdateSession(session);
+				return Ok("Session updated");
+			} catch (NotFoundException e) {
+				return NotFound(e.Message);
 			}
-			Session? existingSession = await _sessionService.GetSessionById(id);
-			if (existingSession == null) {
-				return NotFound($"Session with ID {id} not found.");
-			}
-			await _sessionService.UpdateSession(session);
-			return Ok("Session updated");
 		}
 	}
 }
