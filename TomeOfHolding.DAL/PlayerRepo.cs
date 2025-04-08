@@ -18,21 +18,21 @@ namespace TomeOfHolding.DAL {
 			await _context.SaveChangesAsync();
 		}
 
-        public async Task<Player> GetPlayerById(int id) {
-            return await _context.Players.FindAsync(id);
-        }
+		public async Task<Player> GetPlayerById(int id) {
+			return await _context.Players.FindAsync(id);
+		}
 
-        public async Task DeletePlayer(int PlayerId) {
-            Player player = await _context.Players.FindAsync(PlayerId);
-            if (player != null) {
-                _context.Players.Remove(player);
-                await _context.SaveChangesAsync();
-            }
-        }
+		public async Task DeletePlayer(int PlayerId) {
+			Player player = await _context.Players.FindAsync(PlayerId);
+			if (player != null) {
+				_context.Players.Remove(player);
+				await _context.SaveChangesAsync();
+			}
+		}
 
 		public async Task UpdatePlayer(Player player) {
-            _context.Players.Update(player);
-            await _context.SaveChangesAsync();
-        }
-    }
+			_context.Players.Update(player);
+			await _context.SaveChangesAsync();
+		}
+	}
 }

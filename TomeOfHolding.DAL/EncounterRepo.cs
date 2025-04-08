@@ -13,11 +13,11 @@ namespace TomeOfHolding.DAL {
 			return await _context.Encounters.ToListAsync();
 		}
 
-        public async Task<Encounter> GetEncounterById(int id) {
-            return await _context.Encounters.FindAsync(id);
-        }
+		public async Task<Encounter> GetEncounterById(int id) {
+			return await _context.Encounters.FindAsync(id);
+		}
 
-        public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
 			return await _context.Encounters.Where(e => e.SessionId == sessionId).ToListAsync();
 		}
 
@@ -25,19 +25,19 @@ namespace TomeOfHolding.DAL {
 			_context.Encounters.Add(encounter);
 			await _context.SaveChangesAsync();
 		}
-	
+
 
 		public async Task DeleteEncounter(int id) {
-            Encounter encounter = await _context.Encounters.FindAsync(id);
-            if (encounter != null) {
-                _context.Encounters.Remove(encounter);
-                await _context.SaveChangesAsync();
-            }
-        }
+			Encounter encounter = await _context.Encounters.FindAsync(id);
+			if (encounter != null) {
+				_context.Encounters.Remove(encounter);
+				await _context.SaveChangesAsync();
+			}
+		}
 
-        public async Task UpdateEncounter(Encounter encounter) {
-            _context.Encounters.Update(encounter);
-            await _context.SaveChangesAsync();
-        }
-    }
+		public async Task UpdateEncounter(Encounter encounter) {
+			_context.Encounters.Update(encounter);
+			await _context.SaveChangesAsync();
+		}
+	}
 }

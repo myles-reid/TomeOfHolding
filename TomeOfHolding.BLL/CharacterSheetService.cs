@@ -1,4 +1,5 @@
-﻿using TomeOfHolding.DAL;
+﻿using TomeOfHolding.BLL.Exceptions;
+using TomeOfHolding.DAL;
 using TomeOfHolding.Models;
 
 namespace TomeOfHolding.BLL {
@@ -10,20 +11,26 @@ namespace TomeOfHolding.BLL {
 		}
 
 		public async Task<CharacterSheet> GetCharacterSheet(int characterId) {
-			return await _characterSheetRepo.GetCharacterSheet(characterId);
+			CharacterSheet? sheet = await _characterSheetRepo.GetCharacterSheet(characterId);
+			return sheet ?? throw new NotFoundException("No Character Sheet for that character");
 		}
 
 		public async Task CreateCharacterSheet(CharacterSheet characterSheet) {
+			// add validation
 			await _characterSheetRepo.CreateCharacterSheet(characterSheet);
 		}
 
 
 		public async Task DeleteCharacterSheet(int characterId) {
+			CharacterSheet? cs = await _characterSheetRepo.GetCharacterSheet(characterId) ??
+				throw new NotFoundException("No character Sheet with that character");
 			await _characterSheetRepo.DeleteCharacterSheet(characterId);
 		}
 
 		public async Task UpdateCharacterSheet(CharacterSheet characterSheet) {
-            await _characterSheetRepo.UpdateCharacterSheet(characterSheet);
-        }
+			CharacterSheet? cs = await _characterSheetRepo.GetCharacterSheet(characterSheet.CharacterId) ??
+				throw new NotFoundException("No character Sheet with that character");
+			await _characterSheetRepo.UpdateCharacterSheet(characterSheet);
+		}
 	}
 }

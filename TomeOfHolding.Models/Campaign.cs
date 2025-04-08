@@ -7,6 +7,6 @@
 		public string Title { get; set; }
 		public ICollection<Session> Sessions { get; set; } = new List<Session>();
 		public string Description { get; set; }
-        public ICollection<Character> Characters { get; set; } = new List<Character>();
-    }
+		public ICollection<Character> Characters { get; set; } = new List<Character>();
+	}
 }

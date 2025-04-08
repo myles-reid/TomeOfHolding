@@ -27,7 +27,7 @@ namespace TomeOfHolding.DAL {
 
 		public async Task UpdateCharacterSheet(CharacterSheet characterSheet) {
 			_context.CharacterSheets.Update(characterSheet);
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
 	}
 }
