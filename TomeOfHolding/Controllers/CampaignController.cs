@@ -36,12 +36,9 @@ namespace TomeOfHolding.Controllers {
 
 		[HttpPost]
 		public async Task<IActionResult> CreateCampaign(Campaign campaign) {
-			if (ModelState.IsValid) {
-				await _campaignService.CreateCampaign(campaign);
-				return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
-			} else {
-				return BadRequest("Invalid campaign data.");
-			}
+			if (!ModelState.IsValid) return BadRequest("Invalid campaign data.");
+			await _campaignService.CreateCampaign(campaign);
+			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
 		}
 
 

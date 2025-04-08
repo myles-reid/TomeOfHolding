@@ -32,7 +32,7 @@ namespace TomeOfHolding.BLL {
 
 		public async Task DeleteCampaign(int id) {
 			Campaign? campaign = await _campaignRepo.GetCampaignById(id);
-			if (campaign == null) { throw new NotFoundException("No campaign with that ID found."); }
+			if (campaign == null) throw new NotFoundException("No campaign with that ID found."); 
 			await _campaignRepo.DeleteCampain(id);
 		}
 
