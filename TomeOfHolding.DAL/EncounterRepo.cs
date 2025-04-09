@@ -17,7 +17,11 @@ namespace TomeOfHolding.DAL {
 			return await _context.Encounters.FindAsync(id);
 		}
 
-		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+		public async Task<List<Encounter>> GetEncountersById(List<int> ids) {
+            return await _context.Encounters.Where(e => ids.Contains(e.EncounterId)).ToListAsync();
+        }
+
+        public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
 			return await _context.Encounters.Where(e => e.SessionId == sessionId).ToListAsync();
 		}
 

@@ -1,15 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class CharacterController : ControllerBase {
 		private readonly CharacterService _characterService;
+		private readonly PlayerService _playerService;
+		private readonly CampaignService _campaignService;
+		private readonly CharacterSheetService _charSheetService;
 
-		public CharacterController(CharacterService characterService) {
+		public CharacterController(CharacterService characterService, PlayerService playerService, CampaignService campaignService, CharacterSheetService characterSheetService) {
 			_characterService = characterService;
+			_playerService = playerService;
+			_campaignService = campaignService;
+			_charSheetService = characterSheetService;
 		}
 
 		[HttpGet]
@@ -35,9 +43,42 @@ namespace TomeOfHolding.Controllers {
 		//Will need to add get by player
 
 		[HttpPost]
-		public async Task<IActionResult> CreateCharacter(Character character) {
-			await _characterService.CreateCharacter(character);
-			return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+		public async Task<IActionResult> CreateCharacter(CharacterCreateDTO characterDTO) {
+			if (characterDTO != null) {
+				Player player = await _playerService.GetPlayerById(characterDTO.PlayerId);
+				if (player == null) {
+                    return NotFound("No player found with the provided ID.");
+                }	
+
+                Campaign campaign = await _campaignService.GetCampaignById(characterDTO.CampaignId);
+                if (campaign == null) {
+                    return NotFound("No campaign found with the provided ID.");
+                }
+
+                CharacterSheet characterSheet = await _charSheetService.GetCharacterSheet(characterDTO.CharacterSheetId);
+                if (characterSheet == null) {
+                    return NotFound("No character sheet found with the provided ID.");
+                }
+
+                Character character = new Character {
+					CharacterSheet = characterSheet,
+					CharacterSheetId = characterDTO.CharacterSheetId,
+                    Player = player,
+                    PlayerId = characterDTO.PlayerId,
+                    Campaign = campaign,
+                    CampaignId = characterDTO.CampaignId,
+                    Name = characterDTO.Name,
+                    Class = characterDTO.Class,
+                    Role = characterDTO.Role,
+					Level = characterDTO.Level,
+					Race = characterDTO.Race,
+                    Description = characterDTO.Description
+                };
+
+                await _characterService.CreateCharacter(character);
+				return Ok("Character created successfully.");
+            }
+			return BadRequest("Character creation failed. Please check the input data.");
 		}
 
 		[HttpDelete("{id}")]

@@ -13,7 +13,13 @@ namespace TomeOfHolding.DAL {
 			return await _context.Sessions.ToListAsync();
 		}
 
-		public async Task CreateSession(Session session) {
+        public async Task<List<Session>> GetSessionsById(List<int> ids) {
+            return await _context.Sessions
+                .Where(s => ids.Contains(s.SessionId))
+                .ToListAsync();
+        }
+
+        public async Task CreateSession(Session session) {
 			_context.Sessions.Add(session);
 			await _context.SaveChangesAsync();
 		}

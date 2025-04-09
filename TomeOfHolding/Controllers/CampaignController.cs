@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class CampaignController : ControllerBase {
 		private readonly CampaignService _campaignService;
+        private readonly PlayerService _playerService;
+        private readonly CharacterService _characterService;
+		private readonly SessionService _sessionService;
 
-		public CampaignController(CampaignService campaignService) {
-			_campaignService = campaignService;
-		}
+        public CampaignController(CampaignService campaignService, PlayerService playerService, CharacterService characterService, SessionService sessionService) {
+            _campaignService = campaignService;
+            _playerService = playerService;
+            _characterService = characterService;
+            _sessionService = sessionService;
+        }
 
-		[HttpGet]
+        [HttpGet]
 		public async Task<IActionResult> GetCampaigns() {
 			// Will need to figure out how to process the NotFound response properly
 			List<Campaign>? campaigns = await _campaignService.GetCampaigns();
@@ -33,10 +40,44 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateCampaign(Campaign campaign) {
-			await _campaignService.CreateCampaign(campaign);
-			return CreatedAtAction(nameof(GetCampaignById), new { id = campaign.CampaignId }, campaign);
-		}
+		public async Task<IActionResult> CreateCampaign(CampCreateDTO campaignDTO) {
+			if (campaignDTO != null) {
+                List<Player> players = new List<Player>();
+                players = await _playerService.GetPlayerbyId(campaignDTO.PlayerIds);
+
+                List<Character> characters = new List<Character>();
+                characters = await _characterService.GetCharacterById(campaignDTO.PlayerIds);
+
+				List<Session> sessions = new List<Session>();
+				sessions = await _sessionService.GetSessionById(campaignDTO.SessionIds);
+
+                if (players == null || players.Count == 0) {
+                    return NotFound("No players found with the provided IDs.");
+                }
+
+                if (characters == null || characters.Count == 0) {
+                    return NotFound("No characters found with the provided IDs.");
+                }
+
+				if (sessions == null || sessions.Count == 0) {
+                    return NotFound("No sessions found with the provided IDs.");
+                }
+
+                Campaign campaign = new Campaign {
+                    Title = campaignDTO.Title,
+                    Players = players,
+                    GM_ID = campaignDTO.GM_ID,
+                    GM = players.FirstOrDefault(p => p.PlayerId == campaignDTO.GM_ID),
+                    Description = campaignDTO.Description,
+                    Sessions = sessions,
+                    Characters = characters
+                };
+
+                await _campaignService.CreateCampaign(campaign);
+                return Ok("Campaign created successfully.");
+            }
+            return BadRequest("Invalid campaign data.");
+        }
 
 
 		[HttpDelete("{id}")]

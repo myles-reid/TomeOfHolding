@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class PlayerController : ControllerBase {
 		private readonly PlayerService _playerService;
+        private readonly CampaignService _campaignService;
+        private readonly CharacterService _characterService;
+        private readonly NoteService _noteService;
 
-		public PlayerController(PlayerService playerService) {
-			_playerService = playerService;
-		}
+        public PlayerController(PlayerService playerService, CampaignService campaignService, CharacterService characterService, NoteService noteService) {
+            _playerService = playerService;
+            _campaignService = campaignService;
+            _characterService = characterService;
+            _noteService = noteService;
+        }
 
-		[HttpGet]
+        [HttpGet]
 		public async Task<IActionResult> GetPlayers() {
 			// Will need to figure out how to process the NotFound response proplery
 			List<Player>? players = await _playerService.GetPlayers();
@@ -22,13 +29,35 @@ namespace TomeOfHolding.Controllers {
 			return Ok(players);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreatePlayer(Player player) {
-			await _playerService.CreatePlayer(player);
-			return CreatedAtAction(nameof(GetPlayers), new { id = player.PlayerId }, player);
-		}
+        [HttpPost]
+        public async Task<IActionResult> CreatePlayer(PlayerCreateDTO playerDTO) {
+			if (playerDTO != null) {
+				List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
+				if (campaigns == null || campaigns.Count == 0) {
+					return NotFound("No campaigns found with the provided IDs.");
+				}
 
-		[HttpDelete("{id}")]
+				List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
+				if (characters == null || characters.Count == 0) {
+					return NotFound("No characters found with the provided IDs.");
+				}
+
+				List<Note> notes = await _noteService.GetNoteById(playerDTO.NoteIDs);
+
+				Player player = new Player {
+                    Name = playerDTO.Name,
+					AvailableDays = playerDTO.AvailableDays,
+					Role = playerDTO.Role,
+                    Campaigns = campaigns,
+                    Characters = characters,
+                    Notes = notes
+                };
+            }
+            return BadRequest("Invalid player data.");
+        }
+
+
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeletePlayer(int id) {
 			Player? player = await _playerService.GetPlayerById(id);
 			if (player == null) {

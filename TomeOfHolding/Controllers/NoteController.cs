@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class NoteController : ControllerBase {
 		private readonly NoteService _noteService;
+        private readonly SessionService _sessionService;
+        private readonly PlayerService _playerService;
 
-		public NoteController(NoteService noteService) {
+        public NoteController(NoteService noteService, SessionService sessionService, PlayerService playerService) {
 			_noteService = noteService;
-		}
+            _sessionService = sessionService;
+            _playerService = playerService;
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> GetNotes() {
@@ -33,10 +38,31 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateNote(Note note) {
-			await _noteService.CreateNote(note);
-			return CreatedAtAction(nameof(GetNotes), new { id = note.NoteId }, note);
-		}
+		public async Task<IActionResult> CreateNote(NoteCreateDTO noteDTO) {
+			if (noteDTO != null) {
+				Session session = await _sessionService.GetSessionById(noteDTO.SessionId);
+				if (session == null) {
+					return NotFound("No session found with the provided ID.");
+				}
+
+				Player player = await _playerService.GetPlayerById(noteDTO.PlayerId);
+				if (player == null) {
+					return NotFound("No player found with the provided ID.");
+				}
+
+				Note note = new Note {
+                    SessionId = noteDTO.SessionId,
+                    PlayerId = noteDTO.PlayerId,
+                    Session = session,
+                    Player = player,
+					Notes = noteDTO.Notes
+                };
+
+                await _noteService.CreateNote(note);
+                return Ok("Note created successfully.");
+            }
+            return BadRequest("Invalid note data.");
+        }
 
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteNote(int id) {
