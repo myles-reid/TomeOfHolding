@@ -1,16 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class SessionController : ControllerBase {
 		private readonly SessionService _sessionService;
+        private readonly EncounterService _encounterService;
+        private readonly NoteService _noteService;
+		private readonly CampaignService _campaignService;
 
-		public SessionController(SessionService sessionService) {
+        public SessionController(SessionService sessionService, EncounterService encounterService, NoteService noteService, CampaignService campaignService) {
 			_sessionService = sessionService;
-		}
+			_encounterService = encounterService;
+			_noteService = noteService;
+            _campaignService = campaignService;
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> GetSessions() {
@@ -22,13 +29,30 @@ namespace TomeOfHolding.Controllers {
 			return Ok(sessions);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateSession(Session session) {
-			await _sessionService.CreateSession(session);
-			return CreatedAtAction(nameof(GetSessions), new { id = session.SessionId }, session);
-		}
+        [HttpPost]
+        public async Task<IActionResult> CreateSession(SessionCreateDTO sessionDTO) {
+            if (sessionDTO != null) {
+                List<Note> Notes = await _noteService.GetNoteById(sessionDTO.NoteIDs);
+                List<Encounter> Encounters = await _encounterService.GetEncountersById(sessionDTO.EncounterIDs);
+                Campaign campaign = await _campaignService.GetCampaignById(sessionDTO.CampaignId);
 
-		[HttpDelete("{id}")]
+                Session session = new Session {
+                    Date = sessionDTO.Date,
+                    Summary = sessionDTO.Summary,
+                    CampaignId = sessionDTO.CampaignId,
+                    Campaign = campaign,
+                    Notes = Notes,
+                    Encounters = Encounters
+                };
+
+                await _sessionService.CreateSession(session);
+                return Ok("Session created successfully.");
+            }
+            return BadRequest("Invalid session data.");
+        }
+
+
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteSession(int id) {
 			Session? session = await _sessionService.GetSessionById(id);
 			if (session == null) {

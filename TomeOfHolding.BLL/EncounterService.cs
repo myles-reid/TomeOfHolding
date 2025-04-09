@@ -17,7 +17,11 @@ namespace TomeOfHolding.BLL {
 			return await _encounterRepo.GetEncounterById(id);
 		}
 
-		public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
+		public async Task<List<Encounter>> GetEncountersById(List<int> ids) {
+            return await _encounterRepo.GetEncountersById(ids);
+        }
+
+        public async Task<List<Encounter>> GetEncountersBySession(int sessionId) {
 			return await _encounterRepo.GetEncountersBySession(sessionId);
 		}
 
