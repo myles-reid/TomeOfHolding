@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
+using TomeOfHolding.Models.DTO;
 
 namespace TomeOfHolding.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	public class EncounterController : ControllerBase {
 		private readonly EncounterService _encounterService;
+		private readonly SessionService _sessionService;
 
-		public EncounterController(EncounterService encounterService) {
+		public EncounterController(EncounterService encounterService, SessionService sessionService) {
 			_encounterService = encounterService;
+			_sessionService = sessionService;
 		}
 
 		[HttpGet]
@@ -33,10 +36,27 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateEncounter(Encounter encounter) {
-			await _encounterService.CreateEncounter(encounter);
-			return CreatedAtAction(nameof(GetEncounters), new { id = encounter.EncounterId }, encounter);
-		}
+		public async Task<IActionResult> CreateEncounter(EncounterCreateDTO encounterDTO) {
+			if (encounterDTO != null) {
+				Session session = await _sessionService.GetSessionById(encounterDTO.SessionId);
+				if (session == null) {
+					return NotFound("No session found with the provided ID.");
+				}
+
+                Encounter encounter = new Encounter {
+                    SessionId = encounterDTO.SessionId,
+                    Session = session,
+                    Description = encounterDTO.Description,
+					Difficulty = encounterDTO.Difficulty,
+					Type = encounterDTO.Type,
+                    Reward = encounterDTO.Reward
+                };
+
+                await _encounterService.CreateEncounter(encounter);
+                return Ok("Encounter created successfully.");
+            }
+            return BadRequest("Invalid encounter data.");
+        }
 
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteEncounter(int id) {
