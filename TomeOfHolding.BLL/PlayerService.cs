@@ -13,7 +13,11 @@ namespace TomeOfHolding.BLL {
 			return await _playerRepo.GetPlayers();
 		}
 
-		public async Task CreatePlayer(Player player) {
+        public async Task<List<Player>> GetPlayerbyId(List<int> ids) {
+            return await _playerRepo.GetPlayerbyId(ids);
+        }
+
+        public async Task CreatePlayer(Player player) {
 			//add validation here, currently unsure how
 			await _playerRepo.CreatePlayer(player);
 		}

@@ -17,11 +17,17 @@ namespace TomeOfHolding.DAL {
 			return await _context.Characters.FindAsync(id);
 		}
 
-		//public List<Character> GetCharactersByPlayer(int playerId) {
-		//	return _context.Characters.Where(c => c.PlayerId == playerId).ToList();
-		//}
+        public async Task<List<Character>> GetCharacterById(List<int> ids) {
+            return await _context.Characters
+                .Where(c => ids.Contains(c.CharacterId))
+                .ToListAsync();
+        }
 
-		public async Task CreateCharacter(Character character) {
+        //public List<Character> GetCharactersByPlayer(int playerId) {
+        //	return _context.Characters.Where(c => c.PlayerId == playerId).ToList();
+        //}
+
+        public async Task CreateCharacter(Character character) {
 			_context.Characters.Add(character);
 			await _context.SaveChangesAsync();
 		}
