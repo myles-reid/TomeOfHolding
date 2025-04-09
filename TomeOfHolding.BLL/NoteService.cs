@@ -17,7 +17,11 @@ namespace TomeOfHolding.BLL {
 			return await _noteRepo.GetNoteById(id);
 		}
 
-		public async Task<List<Note>> GetNotesByPlayer(int playerId) {
+        public async Task<List<Note>> GetNoteById(List<int> ids) {
+            return await _noteRepo.GetNoteById(ids);
+        }
+
+        public async Task<List<Note>> GetNotesByPlayer(int playerId) {
 			return await _noteRepo.GetNotesByPlayer(playerId);
 		}
 

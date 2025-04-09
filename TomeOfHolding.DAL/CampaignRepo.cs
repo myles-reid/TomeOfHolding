@@ -17,7 +17,11 @@ namespace TomeOfHolding.DAL {
 			return await _context.Campaigns.FindAsync(id);
 		}
 
-		public async Task CreateCampaign(Campaign campaign) {
+		public async Task<List<Campaign>> GetCampaignById(List<int> ids) {
+            return await _context.Campaigns.Where(c => ids.Contains(c.CampaignId)).ToListAsync();
+        }
+
+        public async Task CreateCampaign(Campaign campaign) {
 			_context.Campaigns.Add(campaign);
 			await _context.SaveChangesAsync();
 		}
