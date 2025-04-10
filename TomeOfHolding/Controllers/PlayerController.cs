@@ -28,28 +28,33 @@ namespace TomeOfHolding.Controllers {
 		}
 
         [HttpPost]
-        public async Task<IActionResult> CreatePlayer(PlayerCreateDTO playerDTO) {
-			if (playerDTO != null) {
-				List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
-				if (campaigns == null || campaigns.Count == 0) {
-					return NotFound("No campaigns found with the provided IDs.");
-				}
-
-				List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
-				if (characters == null || characters.Count == 0) {
-					return NotFound("No characters found with the provided IDs.");
-				}
-
-				Player player = new Player {
-                    Name = playerDTO.Name,
-					AvailableDays = playerDTO.AvailableDays,
-					Role = playerDTO.Role,
-                    Campaigns = campaigns,
-                    Characters = characters
-                };
+        public async Task<IActionResult> CreatePlayer([FromBody] PlayerCreateDTO playerDTO) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
-            return BadRequest("Invalid player data.");
+
+            List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
+            if (campaigns == null || campaigns.Count == 0) {
+                return NotFound("No campaigns found with the provided IDs.");
+            }
+
+            List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
+            if (characters == null || characters.Count == 0) {
+                return NotFound("No characters found with the provided IDs.");
+            }
+
+            Player player = new Player {
+                Name = playerDTO.Name,
+                AvailableDays = playerDTO.AvailableDays,
+                Role = playerDTO.Role,
+                Campaigns = campaigns,
+                Characters = characters
+            };
+
+            await _playerService.CreatePlayer(player);
+            return Ok("Player created successfully.");
         }
+
 
 
         [HttpDelete("{id}")]

@@ -40,48 +40,50 @@ namespace TomeOfHolding.Controllers {
 			return Ok(character);
 		}
 
-		//Will need to add get by player
+        //Will need to add get by player
 
-		[HttpPost]
-		public async Task<IActionResult> CreateCharacter(CharacterCreateDTO characterDTO) {
-			if (characterDTO != null) {
-				Player player = await _playerService.GetPlayerById(characterDTO.PlayerId);
-				if (player == null) {
-                    return NotFound("No player found with the provided ID.");
-                }	
-
-                Campaign campaign = await _campaignService.GetCampaignById(characterDTO.CampaignId);
-                if (campaign == null) {
-                    return NotFound("No campaign found with the provided ID.");
-                }
-
-                CharacterSheet characterSheet = await _charSheetService.GetCharacterSheet(characterDTO.CharacterSheetId);
-                if (characterSheet == null) {
-                    return NotFound("No character sheet found with the provided ID.");
-                }
-
-                Character character = new Character {
-					CharacterSheet = characterSheet,
-					CharacterSheetId = characterDTO.CharacterSheetId,
-                    Player = player,
-                    PlayerId = characterDTO.PlayerId,
-                    Campaign = campaign,
-                    CampaignId = characterDTO.CampaignId,
-                    Name = characterDTO.Name,
-                    Class = characterDTO.Class,
-                    Role = characterDTO.Role,
-					Level = characterDTO.Level,
-					Race = characterDTO.Race,
-                    Description = characterDTO.Description
-                };
-
-                await _characterService.CreateCharacter(character);
-				return Ok("Character created successfully.");
+        [HttpPost]
+        public async Task<IActionResult> CreateCharacter([FromBody] CharacterCreateDTO characterDTO) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
-			return BadRequest("Character creation failed. Please check the input data.");
-		}
 
-		[HttpDelete("{id}")]
+            Player player = await _playerService.GetPlayerById(characterDTO.PlayerId);
+            if (player == null) {
+                return NotFound("No player found with the provided ID.");
+            }
+
+            Campaign campaign = await _campaignService.GetCampaignById(characterDTO.CampaignId);
+            if (campaign == null) {
+                return NotFound("No campaign found with the provided ID.");
+            }
+
+            CharacterSheet characterSheet = await _charSheetService.GetCharacterSheet(characterDTO.CharacterSheetId);
+            if (characterSheet == null) {
+                return NotFound("No character sheet found with the provided ID.");
+            }
+
+            Character character = new Character {
+                CharacterSheet = characterSheet,
+                CharacterSheetId = characterDTO.CharacterSheetId,
+                Player = player,
+                PlayerId = characterDTO.PlayerId,
+                Campaign = campaign,
+                CampaignId = characterDTO.CampaignId,
+                Name = characterDTO.Name,
+                Class = characterDTO.Class,
+                Role = characterDTO.Role,
+                Level = characterDTO.Level,
+                Race = characterDTO.Race,
+                Description = characterDTO.Description
+            };
+
+            await _characterService.CreateCharacter(character);
+            return Ok("Character created successfully.");
+        }
+
+
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCharacter(int id) {
 			Character? character = await _characterService.GetCharacterById(id);
 			if (character == null) {

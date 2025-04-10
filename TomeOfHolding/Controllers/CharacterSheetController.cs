@@ -26,33 +26,36 @@ namespace TomeOfHolding.Controllers {
 			return Ok(characterSheet);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateCharacterSheet(CharSheetCreateDTO sheetDTO) {
-            if (sheetDTO != null) {
-				Character character = await _characterService.GetCharacterById(sheetDTO.CharacterId);
-				if (character == null) {
-					return NotFound("No character found with the provided ID.");
-				}
-
-                CharacterSheet characterSheet = new CharacterSheet {
-					CharacterId = sheetDTO.CharacterId,
-					Character = character,
-					Charisma = sheetDTO.Charisma,
-					Dexterity = sheetDTO.Dexterity,
-					Constitution = sheetDTO.Constitution,
-					Intelligence = sheetDTO.Intelligence,
-					Strength = sheetDTO.Strength,
-					Wisdom = sheetDTO.Wisdom,
-					Currency = sheetDTO.Currency,
-					Spells = sheetDTO.Spells
-                };
-                await _characterSheetService.CreateCharacterSheet(characterSheet);
-                return Ok("CharacterSheet created successfully.");
+        [HttpPost]
+        public async Task<IActionResult> CreateCharacterSheet([FromBody] CharSheetCreateDTO sheetDTO) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
-            return BadRequest("Invalid character sheet data.");
+
+            Character character = await _characterService.GetCharacterById(sheetDTO.CharacterId);
+            if (character == null) {
+                return NotFound("No character found with the provided ID.");
+            }
+
+            CharacterSheet characterSheet = new CharacterSheet {
+                CharacterId = sheetDTO.CharacterId,
+                Character = character,
+                Charisma = sheetDTO.Charisma,
+                Dexterity = sheetDTO.Dexterity,
+                Constitution = sheetDTO.Constitution,
+                Intelligence = sheetDTO.Intelligence,
+                Strength = sheetDTO.Strength,
+                Wisdom = sheetDTO.Wisdom,
+                Currency = sheetDTO.Currency,
+                Spells = sheetDTO.Spells
+            };
+
+            await _characterSheetService.CreateCharacterSheet(characterSheet);
+            return Ok("CharacterSheet created successfully.");
         }
 
-		[HttpDelete("{id}")]
+
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCharacterSheet(int id) {
 			CharacterSheet? characterSheet = await _characterSheetService.GetCharacterSheet(id);
 			if (characterSheet == null) {

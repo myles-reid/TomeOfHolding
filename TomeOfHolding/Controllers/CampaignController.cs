@@ -37,40 +37,44 @@ namespace TomeOfHolding.Controllers {
 			return Ok(campaign);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateCampaign(CampCreateDTO campaignDTO) {
-			if (campaignDTO != null) {
-                List<Player> players = new List<Player>();
-                players = await _playerService.GetPlayerbyId(campaignDTO.PlayerIds);
-
-                List<Character> characters = new List<Character>();
-                characters = await _characterService.GetCharacterById(campaignDTO.PlayerIds);
-
-                if (players == null || players.Count == 0) {
-                    return NotFound("No players found with the provided IDs.");
-                }
-
-                if (characters == null || characters.Count == 0) {
-                    return NotFound("No characters found with the provided IDs.");
-                }
-
-                Campaign campaign = new Campaign {
-                    Title = campaignDTO.Title,
-                    Players = players,
-                    GM_ID = campaignDTO.GM_ID,
-                    GM = players.FirstOrDefault(p => p.PlayerId == campaignDTO.GM_ID),
-                    Description = campaignDTO.Description,
-                    Characters = characters
-                };
-
-                await _campaignService.CreateCampaign(campaign);
-                return Ok("Campaign created successfully.");
+        [HttpPost]
+        public async Task<IActionResult> CreateCampaign([FromBody] CampCreateDTO campaignDTO) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
-            return BadRequest("Invalid campaign data.");
+
+            List<Player> players = await _playerService.GetPlayerbyId(campaignDTO.PlayerIds);
+            List<Character> characters = await _characterService.GetCharacterById(campaignDTO.PlayerIds);
+
+            if (players == null || !players.Any()) {
+                return NotFound("No players found with the provided IDs.");
+            }
+
+            if (characters == null || !characters.Any()) {
+                return NotFound("No characters found with the provided IDs.");
+            }
+
+            Player gm = players.FirstOrDefault(p => p.PlayerId == campaignDTO.GM_ID);
+            if (gm == null) {
+                return BadRequest("Specified GM ID is not in the list of provided players.");
+            }
+
+            Campaign campaign = new Campaign {
+                Title = campaignDTO.Title,
+                Description = campaignDTO.Description,
+                GM_ID = campaignDTO.GM_ID,
+                GM = gm,
+                Players = players,
+                Characters = characters
+            };
+
+            await _campaignService.CreateCampaign(campaign);
+            return Ok("Campaign created successfully.");
         }
 
 
-		[HttpDelete("{id}")]
+
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteCampaign(int id) {
 			Campaign? campaign = await _campaignService.GetCampaignById(id);
 			if (campaign == null) {
