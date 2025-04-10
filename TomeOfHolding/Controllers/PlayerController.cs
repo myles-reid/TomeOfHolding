@@ -10,13 +10,11 @@ namespace TomeOfHolding.Controllers {
 		private readonly PlayerService _playerService;
         private readonly CampaignService _campaignService;
         private readonly CharacterService _characterService;
-        private readonly NoteService _noteService;
 
-        public PlayerController(PlayerService playerService, CampaignService campaignService, CharacterService characterService, NoteService noteService) {
+        public PlayerController(PlayerService playerService, CampaignService campaignService, CharacterService characterService) {
             _playerService = playerService;
             _campaignService = campaignService;
             _characterService = characterService;
-            _noteService = noteService;
         }
 
         [HttpGet]
@@ -42,15 +40,12 @@ namespace TomeOfHolding.Controllers {
 					return NotFound("No characters found with the provided IDs.");
 				}
 
-				List<Note> notes = await _noteService.GetNoteById(playerDTO.NoteIDs);
-
 				Player player = new Player {
                     Name = playerDTO.Name,
 					AvailableDays = playerDTO.AvailableDays,
 					Role = playerDTO.Role,
                     Campaigns = campaigns,
-                    Characters = characters,
-                    Notes = notes
+                    Characters = characters
                 };
             }
             return BadRequest("Invalid player data.");

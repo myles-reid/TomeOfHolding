@@ -6,6 +6,5 @@
 		public string Role { get; set; }
 		public ICollection<Campaign> Campaigns { get; set; } = new List<Campaign>();
 		public ICollection<Character> Characters { get; set; } = new List<Character>();
-		public ICollection<Note> Notes { get; set; } = new List<Note>();
 	}
 }

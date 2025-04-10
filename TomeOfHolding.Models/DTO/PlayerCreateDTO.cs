@@ -5,6 +5,5 @@
 		public string Role { get; set; }
 		public List<int> CampaignIDs { get; set; }
 		public List<int> CharacterIDs { get; set; }
-		public List<int> NoteIDs { get; set; }
 	}
 }

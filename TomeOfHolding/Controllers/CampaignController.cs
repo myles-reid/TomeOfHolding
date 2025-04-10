@@ -10,13 +10,11 @@ namespace TomeOfHolding.Controllers {
 		private readonly CampaignService _campaignService;
         private readonly PlayerService _playerService;
         private readonly CharacterService _characterService;
-		private readonly SessionService _sessionService;
 
-        public CampaignController(CampaignService campaignService, PlayerService playerService, CharacterService characterService, SessionService sessionService) {
+        public CampaignController(CampaignService campaignService, PlayerService playerService, CharacterService characterService) {
             _campaignService = campaignService;
             _playerService = playerService;
             _characterService = characterService;
-            _sessionService = sessionService;
         }
 
         [HttpGet]
@@ -48,9 +46,6 @@ namespace TomeOfHolding.Controllers {
                 List<Character> characters = new List<Character>();
                 characters = await _characterService.GetCharacterById(campaignDTO.PlayerIds);
 
-				List<Session> sessions = new List<Session>();
-				sessions = await _sessionService.GetSessionById(campaignDTO.SessionIds);
-
                 if (players == null || players.Count == 0) {
                     return NotFound("No players found with the provided IDs.");
                 }
@@ -59,17 +54,12 @@ namespace TomeOfHolding.Controllers {
                     return NotFound("No characters found with the provided IDs.");
                 }
 
-				if (sessions == null || sessions.Count == 0) {
-                    return NotFound("No sessions found with the provided IDs.");
-                }
-
                 Campaign campaign = new Campaign {
                     Title = campaignDTO.Title,
                     Players = players,
                     GM_ID = campaignDTO.GM_ID,
                     GM = players.FirstOrDefault(p => p.PlayerId == campaignDTO.GM_ID),
                     Description = campaignDTO.Description,
-                    Sessions = sessions,
                     Characters = characters
                 };
 
