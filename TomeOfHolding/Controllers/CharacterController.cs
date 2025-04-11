@@ -53,11 +53,6 @@ namespace TomeOfHolding.Controllers {
                 return NotFound("No player found with the provided ID.");
             }
 
-            Campaign campaign = await _campaignService.GetCampaignById(characterDTO.CampaignId);
-            if (campaign == null) {
-                return NotFound("No campaign found with the provided ID.");
-            }
-
             CharacterSheet characterSheet = await _charSheetService.GetCharacterSheet(characterDTO.CharacterSheetId);
             if (characterSheet == null) {
                 return NotFound("No character sheet found with the provided ID.");
@@ -68,8 +63,6 @@ namespace TomeOfHolding.Controllers {
                 CharacterSheetId = characterDTO.CharacterSheetId,
                 Player = player,
                 PlayerId = characterDTO.PlayerId,
-                Campaign = campaign,
-                CampaignId = characterDTO.CampaignId,
                 Name = characterDTO.Name,
                 Class = characterDTO.Class,
                 Role = characterDTO.Role,

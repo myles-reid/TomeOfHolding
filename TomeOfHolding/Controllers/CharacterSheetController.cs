@@ -72,9 +72,6 @@ namespace TomeOfHolding.Controllers {
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateCharacterSheet(int id, CharacterSheet sheet) {
-			if (id != sheet.CharacterId) {
-				return BadRequest("CharacterSheet ID mismatch.");
-			}
 			CharacterSheet? existingCharacterSheet = await _characterSheetService.GetCharacterSheet(id);
 			if (existingCharacterSheet == null) {
 				return NotFound("No character sheet found.");

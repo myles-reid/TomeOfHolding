@@ -33,13 +33,9 @@ namespace TomeOfHolding.Models {
         public Player Player { get; set; }
 
         [Required]
-        public int CampaignId { get; set; }
-
-        public Campaign Campaign { get; set; }
-
-        [Required]
         public int CharacterSheetId { get; set; }
 
         public CharacterSheet CharacterSheet { get; set; }
+
     }
 }
