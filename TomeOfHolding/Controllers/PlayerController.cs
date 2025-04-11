@@ -34,14 +34,8 @@ namespace TomeOfHolding.Controllers {
             }
 
             List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
-            if (campaigns == null || campaigns.Count == 0) {
-                return NotFound("No campaigns found with the provided IDs.");
-            }
 
             List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
-            if (characters == null || characters.Count == 0) {
-                return NotFound("No characters found with the provided IDs.");
-            }
 
             Player player = new Player {
                 Name = playerDTO.Name,
