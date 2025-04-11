@@ -76,16 +76,28 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateCharacter(int id, Character character) {
-			if (id != character.CharacterId) {
-				return BadRequest("Character ID mismatch.");
+		public async Task<IActionResult> UpdateCharacter(int id, CharacterCreateDTO characterDTO) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
 			}
 			Character? existingCharacter = await _characterService.GetCharacterById(id);
 			if (existingCharacter == null) {
 				return NotFound("No character found.");
 			}
+			Player player = await _playerService.GetPlayerById(characterDTO.PlayerId);
+			if (player == null) {
+				return NotFound("No player found with the provided ID.");
+			}
+			CharacterSheet characterSheet = await _charSheetService.GetCharacterSheet(characterDTO.CharacterSheetId);
+			if (characterSheet == null) {
+				return NotFound("No character sheet found with the provided ID.");
+			}
+			Character character = _mapper.Map<Character>(characterDTO);
+			character.CharacterId = id;
+			character.Player = player;
+			character.CharacterSheet = characterSheet;
 			await _characterService.UpdateCharacter(character);
-			return Ok("Character Updated");
+			return Ok("Character updated successfully.");
 		}
 	}
 }

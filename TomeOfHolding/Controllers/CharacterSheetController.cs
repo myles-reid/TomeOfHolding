@@ -50,13 +50,18 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateCharacterSheet(int id, CharacterSheet sheet) {
-			CharacterSheet? existingCharacterSheet = await _characterSheetService.GetCharacterSheet(id);
-			if (existingCharacterSheet == null) {
+		public async Task<IActionResult> UpdateCharacterSheet(int id, CharSheetCreateDTO sheetDTO) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
+			CharacterSheet? existingSheet = await _characterSheetService.GetCharacterSheet(id);
+			if (existingSheet == null) {
 				return NotFound("No character sheet found.");
 			}
-			await _characterSheetService.UpdateCharacterSheet(sheet);
-			return Ok("CharacterSheet updated");
+			CharacterSheet characterSheet = _mapper.Map<CharacterSheet>(sheetDTO);
+			characterSheet.CharacterSheetID = id;
+			await _characterSheetService.UpdateCharacterSheet(characterSheet);
+			return Ok("CharacterSheet updated successfully.");
 		}
 	}
 }

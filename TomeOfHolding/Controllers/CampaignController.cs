@@ -85,16 +85,31 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateCampaign(int id, Campaign campaign) {
-			if (id != campaign.CampaignId) {
-				return BadRequest("Campaign ID mismatch.");
-			}
-			Campaign? existingCampaign = await _campaignService.GetCampaignById(id);
-			if (existingCampaign == null) {
-				return NotFound("No campaign with that ID found.");
-			}
-			await _campaignService.UpdateCampaign(campaign);
-			return Ok("Campaign Updated");
-		}
+		public async Task<IActionResult> UpdateCampaign(int id, CampCreateDTO campaignDTO) {
+            Campaign? existingCampaign = await _campaignService.GetCampaignById(id);
+            if (existingCampaign == null) {
+                return NotFound("No campaign with that ID found.");
+            }
+            List<Player> players = await _playerService.GetPlayerbyId(campaignDTO.PlayerIds);
+            List<Character> characters = await _characterService.GetCharacterById(campaignDTO.PlayerIds);
+            if (players == null || !players.Any()) {
+                return NotFound("No players found with the provided IDs.");
+            }
+            if (characters == null || !characters.Any()) {
+                return NotFound("No characters found with the provided IDs.");
+            }
+            Player gm = players.FirstOrDefault(p => p.PlayerId == campaignDTO.GM_ID);
+            if (gm == null) {
+                return BadRequest("Specified GM ID is not in the list of provided players.");
+            }
+            existingCampaign.Title = campaignDTO.Title;
+            existingCampaign.Description = campaignDTO.Description;
+            existingCampaign.GM_ID = campaignDTO.GM_ID;
+            existingCampaign.GM = gm;
+            existingCampaign.Players = players;
+            existingCampaign.Characters = characters;
+            await _campaignService.UpdateCampaign(existingCampaign);
+            return Ok("Campaign updated successfully.");
+        }
 	}
 }

@@ -60,16 +60,22 @@ namespace TomeOfHolding.Controllers {
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdatePlayer(int id, Player player) {
-			if (id != player.PlayerId) {
-				return BadRequest("Player ID mismatch.");
+		public async Task<IActionResult> UpdatePlayer(int id, PlayerCreateDTO playerDTO) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
 			}
 			Player? existingPlayer = await _playerService.GetPlayerById(id);
 			if (existingPlayer == null) {
 				return NotFound($"Player with ID {id} not found.");
 			}
+			List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
+			List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
+			Player player = _mapper.Map<Player>(playerDTO);
+			player.PlayerId = id;
+			player.Campaigns = campaigns;
+			player.Characters = characters;
 			await _playerService.UpdatePlayer(player);
-			return Ok("Player updated");
+			return Ok("Player updated successfully.");
 		}
 	}
 }
