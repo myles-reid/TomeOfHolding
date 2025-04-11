@@ -32,14 +32,7 @@ namespace TomeOfHolding.Controllers {
                 return BadRequest(ModelState);
             }
 
-            Character character = await _characterService.GetCharacterById(sheetDTO.CharacterId);
-            if (character == null) {
-                return NotFound("No character found with the provided ID.");
-            }
-
             CharacterSheet characterSheet = new CharacterSheet {
-                CharacterId = sheetDTO.CharacterId,
-                Character = character,
                 Charisma = sheetDTO.Charisma,
                 Dexterity = sheetDTO.Dexterity,
                 Constitution = sheetDTO.Constitution,
@@ -67,9 +60,6 @@ namespace TomeOfHolding.Controllers {
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateCharacterSheet(int id, CharacterSheet sheet) {
-			if (id != sheet.CharacterId) {
-				return BadRequest("CharacterSheet ID mismatch.");
-			}
 			CharacterSheet? existingCharacterSheet = await _characterSheetService.GetCharacterSheet(id);
 			if (existingCharacterSheet == null) {
 				return NotFound("No character sheet found.");

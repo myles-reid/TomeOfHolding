@@ -50,23 +50,11 @@ namespace TomeOfHolding.DAL {
                 .HasForeignKey(c => c.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Character>()
-				.HasOne(c => c.Campaign)
-				.WithMany(cp => cp.Characters)
-				.HasForeignKey(c => c.CampaignId)
-				.OnDelete(DeleteBehavior.Cascade);
-
 			modelBuilder.Entity<Character>()
-				.HasOne(c => c.CharacterSheet)
-				.WithOne(cs => cs.Character)
-				.HasForeignKey<CharacterSheet>(cs => cs.CharacterId)
+				.HasOne(c => c.Player)
+				.WithMany(p => p.Characters)
+				.HasForeignKey(c => c.PlayerId)
 				.OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Character>()
-                .HasOne(c => c.Player)
-                .WithMany(p => p.Characters)
-                .HasForeignKey(c => c.PlayerId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
-	}
+    }
 }

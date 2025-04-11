@@ -2,9 +2,6 @@
 
 namespace TomeOfHolding.Models.DTO {
     public class CharSheetCreateDTO {
-        [Required]
-        public int CharacterId { get; set; }
-
         [Range(1, 30)]
         public int Strength { get; set; }
 

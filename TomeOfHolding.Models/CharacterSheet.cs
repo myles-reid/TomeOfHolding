@@ -4,11 +4,6 @@ namespace TomeOfHolding.Models {
     public class CharacterSheet {
         public int CharacterSheetID { get; set; }
 
-        [Required]
-        public int CharacterId { get; set; }
-
-        public Character Character { get; set; }
-
         [Range(1, 30)]
         public int Charisma { get; set; }
 

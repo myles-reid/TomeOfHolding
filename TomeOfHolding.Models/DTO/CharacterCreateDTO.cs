@@ -9,9 +9,6 @@ namespace TomeOfHolding.Models.DTO {
         public int PlayerId { get; set; }
 
         [Required]
-        public int CampaignId { get; set; }
-
-        [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
