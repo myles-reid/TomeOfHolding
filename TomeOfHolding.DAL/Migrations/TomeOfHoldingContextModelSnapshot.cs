@@ -63,6 +63,22 @@ namespace TomeOfHolding.DAL.Migrations
                     b.HasIndex("GM_ID");
 
                     b.ToTable("Campaigns");
+
+                    b.HasData(
+                        new
+                        {
+                            CampaignId = 1,
+                            Description = "A thrilling adventure to slay a dragon.",
+                            GM_ID = 3,
+                            Title = "Dragon's Quest"
+                        },
+                        new
+                        {
+                            CampaignId = 2,
+                            Description = "Explore the magical realms and uncover secrets.",
+                            GM_ID = 4,
+                            Title = "Mystic Realms"
+                        });
                 });
 
             modelBuilder.Entity("TomeOfHolding.Models.Character", b =>
@@ -119,6 +135,60 @@ namespace TomeOfHolding.DAL.Migrations
                     b.HasIndex("PlayerId");
 
                     b.ToTable("Characters");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            CampaignId = 1,
+                            CharacterSheetId = 1,
+                            Class = "Warrior",
+                            Description = "A brave dwarf warrior.",
+                            Level = 10,
+                            Name = "Thorin",
+                            PlayerId = 1,
+                            Race = "Dwarf",
+                            Role = "Tank"
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            CampaignId = 1,
+                            CharacterSheetId = 2,
+                            Class = "Mage",
+                            Description = "A skilled elven mage.",
+                            Level = 12,
+                            Name = "Elandra",
+                            PlayerId = 2,
+                            Race = "Elf",
+                            Role = "DPS"
+                        },
+                        new
+                        {
+                            CharacterId = 3,
+                            CampaignId = 2,
+                            CharacterSheetId = 3,
+                            Class = "Rogue",
+                            Description = "A cunning human rogue.",
+                            Level = 8,
+                            Name = "Gorath",
+                            PlayerId = 1,
+                            Race = "Human",
+                            Role = "DPS"
+                        },
+                        new
+                        {
+                            CharacterId = 4,
+                            CampaignId = 2,
+                            CharacterSheetId = 4,
+                            Class = "Cleric",
+                            Description = "A devoted halfling cleric.",
+                            Level = 9,
+                            Name = "Lyra",
+                            PlayerId = 2,
+                            Race = "Halfling",
+                            Role = "Healer"
+                        });
                 });
 
             modelBuilder.Entity("TomeOfHolding.Models.CharacterSheet", b =>
@@ -158,6 +228,60 @@ namespace TomeOfHolding.DAL.Migrations
                     b.HasKey("CharacterSheetID");
 
                     b.ToTable("CharacterSheets");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterSheetID = 1,
+                            CharacterId = 1,
+                            Charisma = 10,
+                            Constitution = 15,
+                            Currency = 100,
+                            Dexterity = 12,
+                            Intelligence = 8,
+                            Spells = "[\"Shield Bash\",\"Battle Cry\"]",
+                            Strength = 18,
+                            Wisdom = 10
+                        },
+                        new
+                        {
+                            CharacterSheetID = 2,
+                            CharacterId = 2,
+                            Charisma = 14,
+                            Constitution = 8,
+                            Currency = 200,
+                            Dexterity = 10,
+                            Intelligence = 18,
+                            Spells = "[\"Fireball\",\"Teleport\"]",
+                            Strength = 8,
+                            Wisdom = 12
+                        },
+                        new
+                        {
+                            CharacterSheetID = 3,
+                            CharacterId = 3,
+                            Charisma = 12,
+                            Constitution = 10,
+                            Currency = 150,
+                            Dexterity = 18,
+                            Intelligence = 14,
+                            Spells = "[\"Backstab\",\"Shadow Step\"]",
+                            Strength = 10,
+                            Wisdom = 8
+                        },
+                        new
+                        {
+                            CharacterSheetID = 4,
+                            CharacterId = 4,
+                            Charisma = 16,
+                            Constitution = 12,
+                            Currency = 120,
+                            Dexterity = 10,
+                            Intelligence = 10,
+                            Spells = "[\"Heal\",\"Bless\"]",
+                            Strength = 8,
+                            Wisdom = 18
+                        });
                 });
 
             modelBuilder.Entity("TomeOfHolding.Models.Player", b =>
@@ -185,6 +309,36 @@ namespace TomeOfHolding.DAL.Migrations
                     b.HasKey("PlayerId");
 
                     b.ToTable("Players");
+
+                    b.HasData(
+                        new
+                        {
+                            PlayerId = 1,
+                            AvailableDays = "[1,3]",
+                            Name = "Alice",
+                            Role = "Player"
+                        },
+                        new
+                        {
+                            PlayerId = 2,
+                            AvailableDays = "[2,4]",
+                            Name = "Bob",
+                            Role = "Player"
+                        },
+                        new
+                        {
+                            PlayerId = 3,
+                            AvailableDays = "[5]",
+                            Name = "Charlie",
+                            Role = "GM"
+                        },
+                        new
+                        {
+                            PlayerId = 4,
+                            AvailableDays = "[6]",
+                            Name = "Diana",
+                            Role = "GM"
+                        });
                 });
 
             modelBuilder.Entity("CampaignPlayer", b =>
