@@ -55,8 +55,8 @@ namespace TomeOfHolding.DAL {
 			//	.WithMany(p => p.Characters)
 			//	.HasForeignKey(c => c.PlayerId)
 			//	.OnDelete(DeleteBehavior.Cascade);
-        
-    
+
+
 			//modelBuilder.Entity<Character>()
 			//	.HasOne(c => c.Campaign)
 			//	.WithMany(cp => cp.Characters)
@@ -91,18 +91,18 @@ namespace TomeOfHolding.DAL {
 
 			// Seed Characters
 			modelBuilder.Entity<Character>().HasData(
-				new Character { CharacterId = 1, Name = "Thorin", Class = "Warrior", Role = "Tank", Level = 10, Race = "Dwarf", Description = "A brave dwarf warrior.", PlayerId = 1, CampaignId = 1, CharacterSheetId = 1 },
-				new Character { CharacterId = 2, Name = "Elandra", Class = "Mage", Role = "DPS", Level = 12, Race = "Elf", Description = "A skilled elven mage.", PlayerId = 2, CampaignId = 1, CharacterSheetId = 2 },
-				new Character { CharacterId = 3, Name = "Gorath", Class = "Rogue", Role = "DPS", Level = 8, Race = "Human", Description = "A cunning human rogue.", PlayerId = 1, CampaignId = 2, CharacterSheetId = 3 },
-				new Character { CharacterId = 4, Name = "Lyra", Class = "Cleric", Role = "Healer", Level = 9, Race = "Halfling", Description = "A devoted halfling cleric.", PlayerId = 2, CampaignId = 2, CharacterSheetId = 4 }
+				new Character { CharacterId = 1, Name = "Thorin", Class = "Warrior", Role = "Tank", Level = 10, Race = "Dwarf", Description = "A brave dwarf warrior.", PlayerId = 1, /*CampaignId = 1,*/ CharacterSheetId = 1 },
+				new Character { CharacterId = 2, Name = "Elandra", Class = "Mage", Role = "DPS", Level = 12, Race = "Elf", Description = "A skilled elven mage.", PlayerId = 2, /*CampaignId = 1,*/ CharacterSheetId = 2 },
+				new Character { CharacterId = 3, Name = "Gorath", Class = "Rogue", Role = "DPS", Level = 8, Race = "Human", Description = "A cunning human rogue.", PlayerId = 1, /*CampaignId = 2,*/ CharacterSheetId = 3 },
+				new Character { CharacterId = 4, Name = "Lyra", Class = "Cleric", Role = "Healer", Level = 9, Race = "Halfling", Description = "A devoted halfling cleric.", PlayerId = 2, /*CampaignId = 2,*/ CharacterSheetId = 4 }
 			);
 
 			// Seed CharacterSheets
 			modelBuilder.Entity<CharacterSheet>().HasData(
-				new CharacterSheet { CharacterSheetID = 1, CharacterId = 1, Charisma = 10, Dexterity = 12, Constitution = 15, Intelligence = 8, Strength = 18, Wisdom = 10, Currency = 100, Spells = new List<string> { "Shield Bash", "Battle Cry" } },
-				new CharacterSheet { CharacterSheetID = 2, CharacterId = 2, Charisma = 14, Dexterity = 10, Constitution = 8, Intelligence = 18, Strength = 8, Wisdom = 12, Currency = 200, Spells = new List<string> { "Fireball", "Teleport" } },
-				new CharacterSheet { CharacterSheetID = 3, CharacterId = 3, Charisma = 12, Dexterity = 18, Constitution = 10, Intelligence = 14, Strength = 10, Wisdom = 8, Currency = 150, Spells = new List<string> { "Backstab", "Shadow Step" } },
-				new CharacterSheet { CharacterSheetID = 4, CharacterId = 4, Charisma = 16, Dexterity = 10, Constitution = 12, Intelligence = 10, Strength = 8, Wisdom = 18, Currency = 120, Spells = new List<string> { "Heal", "Bless" } }
+				new CharacterSheet { CharacterSheetID = 1, /*CharacterId = 1,*/ Charisma = 10, Dexterity = 12, Constitution = 15, Intelligence = 8, Strength = 18, Wisdom = 10, Currency = 100, Spells = new List<string> { "Shield Bash", "Battle Cry" } },
+				new CharacterSheet { CharacterSheetID = 2, /*CharacterId = 2,*/ Charisma = 14, Dexterity = 10, Constitution = 8, Intelligence = 18, Strength = 8, Wisdom = 12, Currency = 200, Spells = new List<string> { "Fireball", "Teleport" } },
+				new CharacterSheet { CharacterSheetID = 3, /*CharacterId = 3,*/ Charisma = 12, Dexterity = 18, Constitution = 10, Intelligence = 14, Strength = 10, Wisdom = 8, Currency = 150, Spells = new List<string> { "Backstab", "Shadow Step" } },
+				new CharacterSheet { CharacterSheetID = 4, /*CharacterId = 4,*/ Charisma = 16, Dexterity = 10, Constitution = 12, Intelligence = 10, Strength = 8, Wisdom = 18, Currency = 120, Spells = new List<string> { "Heal", "Bless" } }
 			);
 
 			//// Seed CampaignPlayer relationships
