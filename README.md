@@ -18,11 +18,6 @@ This API supports:
 
 ## 🔌 API Usage Examples
 
-### 🧑 Create a New Player
-
-**POST** `/api/players`
-
-<details>
 ## Creating a Player
 
 ```json
