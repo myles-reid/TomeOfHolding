@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using TomeOfHolding.BLL;
 using TomeOfHolding.Models;
 using TomeOfHolding.Models.DTO;
@@ -8,18 +9,19 @@ namespace TomeOfHolding.Controllers {
 	[ApiController]
 	public class PlayerController : ControllerBase {
 		private readonly PlayerService _playerService;
-        private readonly CampaignService _campaignService;
-        private readonly CharacterService _characterService;
+		private readonly CampaignService _campaignService;
+		private readonly CharacterService _characterService;
+		private readonly IMapper _mapper;
 
-        public PlayerController(PlayerService playerService, CampaignService campaignService, CharacterService characterService) {
-            _playerService = playerService;
-            _campaignService = campaignService;
-            _characterService = characterService;
-        }
+		public PlayerController(PlayerService playerService, CampaignService campaignService, CharacterService characterService, IMapper mapper) {
+			_playerService = playerService;
+			_campaignService = campaignService;
+			_characterService = characterService;
+			_mapper = mapper;
+		}
 
-        [HttpGet]
+		[HttpGet]
 		public async Task<IActionResult> GetPlayers() {
-			// Will need to figure out how to process the NotFound response proplery
 			List<Player>? players = await _playerService.GetPlayers();
 			if (players == null || players.Count == 0) {
 				return NotFound("No players found.");
@@ -27,31 +29,27 @@ namespace TomeOfHolding.Controllers {
 			return Ok(players);
 		}
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePlayer([FromBody] PlayerCreateDTO playerDTO) {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+		[HttpPost]
+		public async Task<IActionResult> CreatePlayer([FromBody] PlayerCreateDTO playerDTO) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
 
-            List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
+			List<Campaign> campaigns = await _campaignService.GetCampaignById(playerDTO.CampaignIDs);
 
-            List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
+			List<Character> characters = await _characterService.GetCharacterById(playerDTO.CharacterIDs);
 
-            Player player = new Player {
-                Name = playerDTO.Name,
-                AvailableDays = playerDTO.AvailableDays,
-                Role = playerDTO.Role,
-                Campaigns = campaigns,
-                Characters = characters
-            };
+			Player player = _mapper.Map<Player>(playerDTO);
+			player.Campaigns = campaigns;
+			player.Characters = characters;
 
-            await _playerService.CreatePlayer(player);
-            return Ok("Player created successfully.");
-        }
+			await _playerService.CreatePlayer(player);
+			return Ok("Player created successfully.");
+		}
 
 
 
-        [HttpDelete("{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeletePlayer(int id) {
 			Player? player = await _playerService.GetPlayerById(id);
 			if (player == null) {
