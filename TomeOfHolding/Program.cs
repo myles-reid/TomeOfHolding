@@ -1,7 +1,7 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TomeOfHolding.BLL;
 using TomeOfHolding.DAL;
+using TomeOfHolding.Models;
 
 namespace TomeOfHolding {
 	public class Program {
