@@ -140,7 +140,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterId = 1,
-                            CampaignId = 1,
                             CharacterSheetId = 1,
                             Class = "Warrior",
                             Description = "A brave dwarf warrior.",
@@ -153,7 +152,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterId = 2,
-                            CampaignId = 1,
                             CharacterSheetId = 2,
                             Class = "Mage",
                             Description = "A skilled elven mage.",
@@ -166,7 +164,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterId = 3,
-                            CampaignId = 2,
                             CharacterSheetId = 3,
                             Class = "Rogue",
                             Description = "A cunning human rogue.",
@@ -179,7 +176,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterId = 4,
-                            CampaignId = 2,
                             CharacterSheetId = 4,
                             Class = "Cleric",
                             Description = "A devoted halfling cleric.",
@@ -233,7 +229,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterSheetID = 1,
-                            CharacterId = 1,
                             Charisma = 10,
                             Constitution = 15,
                             Currency = 100,
@@ -246,7 +241,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterSheetID = 2,
-                            CharacterId = 2,
                             Charisma = 14,
                             Constitution = 8,
                             Currency = 200,
@@ -259,7 +253,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterSheetID = 3,
-                            CharacterId = 3,
                             Charisma = 12,
                             Constitution = 10,
                             Currency = 150,
@@ -272,7 +265,6 @@ namespace TomeOfHolding.DAL.Migrations
                         new
                         {
                             CharacterSheetID = 4,
-                            CharacterId = 4,
                             Charisma = 16,
                             Constitution = 12,
                             Currency = 120,
