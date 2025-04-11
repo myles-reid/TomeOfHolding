@@ -1,4 +1,4 @@
-
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TomeOfHolding.BLL;
 using TomeOfHolding.DAL;
@@ -8,6 +8,8 @@ namespace TomeOfHolding {
 		public static void Main(string[] args) {
 			var builder = WebApplication.CreateBuilder(args);
 
+			// Calling mapperProfile to register all the mappings
+			builder.Services.AddAutoMapper(typeof(MapperProfile));
 			// Add services to the container.
 
 			builder.Services.AddControllers();
