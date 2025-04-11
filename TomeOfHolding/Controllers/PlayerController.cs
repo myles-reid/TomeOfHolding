@@ -29,6 +29,15 @@ namespace TomeOfHolding.Controllers {
 			return Ok(players);
 		}
 
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetPlayerById(int id) {
+			Player? player = await _playerService.GetPlayerById(id);
+			if (player == null) {
+				return NotFound($"Player with ID {id} not found.");
+			}
+			return Ok(player);
+		}
+
 		[HttpPost]
 		public async Task<IActionResult> CreatePlayer([FromBody] PlayerCreateDTO playerDTO) {
 			if (!ModelState.IsValid) {
